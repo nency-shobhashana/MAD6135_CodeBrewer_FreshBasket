@@ -1,0 +1,153 @@
+header .top-header {
+	display: inline-block;
+	width: 100%;
+	padding: 15px 0;
+	border-bottom: 1px solid #CCC;
+}
+header .top-header .search-col,
+header .top-header .utilities-col {
+	padding: 30px 0;
+}
+header .menu-bar {
+	display: inline-block;
+	width: 100%;
+	padding: 20px 0;
+	border-bottom: 1px solid #CCC;
+}
+header .menu-bar a {
+	font-size: 18px;
+	color: #75c34d;
+	font-weight: bold;
+}
+main .category {
+	display: inline-block;
+	width: 100%;
+	padding: 50px 0;
+}
+main .category .category-box a {
+	display: inline-block;
+	width: 100%;
+	text-decoration: none;
+}
+main .category .category-box .category-img {
+	width: 100px;
+	height: 100px;
+	margin: 0 auto;
+}
+main .category .category-box .category-name {
+	margin-top: 15px;
+	font-size: 20px;
+}
+main .best-saver {
+	display: inline-block;
+	width: 100%;
+	margin-bottom: 30px;
+}
+main .best-saver .product-box {
+	padding: 15px;
+	margin-top: 20px;
+	background-color: #f3f3f3;
+}
+main .best-saver .product-box a {
+	text-decoration: none;
+}
+main .best-saver .product-box .product-image img {
+	width: 100%;
+}
+main .best-saver .product-box .product-name {
+	font-size: 20px;
+	color: #4B4747;
+	font-weight: bold;
+	margin-top: 15px;
+}
+main .best-saver .product-box .product-price {
+	margin: 5px 0 15px;
+}
+main .best-saver .product-box .product-add button {
+	width: 100%;
+}
+main .button button {
+	background-color: #F07D4A;
+	border-color: #F07D4A;
+	font-weight: bold;
+}
+main .button button:hover,
+main .button button:focus {
+	border-color: #F07D4A;
+	background-color: #FFF;
+	color: #F07D4A;
+}
+
+
+
+
+/* Footer */
+footer .footer-section {
+	display: inline-block;
+	width: 100%;
+	padding: 50px 0;
+	background-color: #f3f3f3;
+	border-top: 1px solid #000;
+}
+footer .footer-section h2 {
+	margin-bottom: 25px;
+}
+footer .footer-section ul {
+	display: inline-block;
+	width: 100%;
+	margin-bottom: 0;
+	list-style-type: none;
+	padding-left: 0;
+}
+footer .footer-section ul li {
+	margin-bottom: 15px;
+}
+footer .footer-section ul li a {
+	color: #212529;
+	text-decoration: none;
+}
+footer .footer-section ul li a:hover {
+	color: #75C34D;
+}
+footer .footer-section .socialshare-section ul li {
+	display: inline-block;
+	margin-right: 15px;
+}
+
+/* Login and regitster*/
+.login-page {
+	display: inline-block;
+	width: 100%;
+	background-color: #f3f3f3;
+	padding: 50px 0;
+}
+.login-section {
+	display: inline-block;
+  width: 100%;
+  background: #FFF;
+  padding: 35px;
+  margin: 50px 0;
+}
+.login-section button {
+	width: 100%;
+	margin: 20px 0;
+}
+
+.text-green {
+	color: #75C34D;
+}
+a.text-green:hover {
+	color: #75C34D;
+}
+.mt-30 {
+	margin-top: 30px;
+}
+.p-20 {
+	padding: 20px;
+}
+.mb-20 {
+	margin-bottom: 20px;
+}
+.border {
+	border: 1px solid #CCC;
+}
