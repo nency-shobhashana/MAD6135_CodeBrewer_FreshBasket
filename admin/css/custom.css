@@ -1,18 +1,27 @@
-.bg-gradient-primary 
-{
+.bg-gradient-green {
     background-color: #75C34D;
     background-image: linear-gradient(180deg,#75C34D,#75C34D 100%);
     background-size: cover;
 }
 
-.btn-primary 
-{
+.btn-orange {
     color: #fff;
-    background-color: #75C34D;
-    border-color: #75C34D;
+    background-color: #F07D4A;
+    border-color: #F07D4A;
+    font-weight: bold;
 }
+.btn-orange:hover {
+    color: #F07D4A;
+    background-color: #FFF;
+}
+.btn-orange:hover .text-white {
+    color: #F07D4A !important;
+ }
 
 .text-primary 
 {
     color: #66AC42!important;
+}
+.border-left-orange {
+	border-left: .25rem solid #F07D4A!important;
 }
