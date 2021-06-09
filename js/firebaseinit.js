@@ -27,11 +27,14 @@ function registerUser()
     {
       alert('User Register successfully');
       console.log('User Registration Succesfully');
-      //var id=firebase.auth().currentUser.uid;
-      // firebase.database().ref('Users/'+id).set({
-      // fatherName:fname,
+      var id=firebase.auth().currentUser.uid;
+      firebase.database().ref('Users/'+id).set({
+      firstName:fname,
+      lastName:lname,
+      emaill:email,
       // UserAge:age,
-      // CNIC:cnic,
+
+      });
    }).catch(function(error){
 
     var errorcode=error.code;
