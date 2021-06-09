@@ -12,3 +12,34 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
+
+
+const auth = firebase.auth();
+
+function registerUser()
+{
+  console.log('Aparna');
+    var fname = document.getElementById('validationCustom01').value;
+    var lname = document.getElementById('validationCustom02').value;
+    var email = document.getElementById('validationCustomUsername').value;
+    var password = document.getElementById('exampleInputPassword1').value;
+    firebase.auth().createUserWithEmailAndPassword(email,password).then(function()
+    {
+      alert('User Register successfully');
+      console.log('User Registration Succesfully');
+      //var id=firebase.auth().currentUser.uid;
+      // firebase.database().ref('Users/'+id).set({
+      // fatherName:fname,
+      // UserAge:age,
+      // CNIC:cnic,
+   }).catch(function(error){
+
+    var errorcode=error.code;
+    var errormsg=error.message;
+
+   });
+
+
+
+}
+    

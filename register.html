@@ -9,6 +9,18 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/main.css">
 
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+	<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
+	<!-- TODO: Add SDKs for Firebase products that you want to use
+	     https://firebase.google.com/docs/web/setup#available-libraries -->
+	<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-analytics.js"></script>
+	<script type="text/javascript" src="js/firebaseinit.js"></script>
+
+
+
+
     <title>Fresh Basket - Register</title>
   </head>
   <body>
@@ -103,7 +115,7 @@
                                 <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
                               </div>
                               <div class="button">
-                                <button type="submit" class="btn btn-primary btn-orange">Sign In</button>
+                                <button onclick="registerUser()" type="submit" class="btn btn-primary btn-orange">Registration New User</button>
                             </div>
                             <div class="link">Already have Account?
                                 <a href="login.html" class="text-green">Login Here</a>
@@ -181,6 +193,15 @@
         });
       }, false);
     })();
+
+
+
+
+
+
+
+
+
     </script>
   </body>
 </html>
