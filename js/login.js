@@ -3,7 +3,7 @@
 firebase.auth().onAuthStateChanged(function(user) {
 if (user) 
 {
-      
+     window.location = 'index.html';
      console.log("Welcome");
     
 } 
@@ -38,3 +38,7 @@ function login()
     window.alert("Error: " + errorMessage);
   });
 }
+
+
+
+

@@ -9,6 +9,17 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/main.css">
 
+
+	<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
+		  <!-- TODO: Add SDKs for Firebase products that you want to use
+			   https://firebase.google.com/docs/web/setup#available-libraries -->
+	<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-analytics.js"></script>
+	<script src="js/firebaseinit.js"></script>
+	<script src = "js/profile.js"></script>
+
+
+
     <title>Fresh Basket - Profile</title>
   </head>
   <body>
@@ -33,12 +44,10 @@
 				      <div class="user-utilities">
 				      	<div class="row">
 				      		<div class="col-sm-4 text-right"></div>
-				      		<div class="col-sm-4 text-right">
-				      			<a href="login.html">
-				      				<img src="images/profile.png" width="35">
-				      			</a>
+				      		<div class="col-sm-6 text-right">
+				      			<button class="btn btn-outline-secondary logout-btn-color" type="button" onclick="logout()">Logout</button>
 				      		</div>
-				      		<div class="col-sm-4 text-right">
+				      		<div class="col-sm-2 text-right">
 				      			<img src="images/cart.png" width="40">
 				      		</div>
 				      	</div>

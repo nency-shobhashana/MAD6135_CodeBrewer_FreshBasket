@@ -151,3 +151,8 @@ a.text-green:hover {
 .border {
 	border: 1px solid #CCC;
 }
+.logout-btn-color
+{
+	background-color: #75C34D;
+	color: #FFF;
+}

@@ -20,30 +20,4 @@ function registerUser()
         var errorMessage = error.message;
         // ..
       });
-
-
-
-
-
-
-
-  //   firebase.auth().createUserWithEmailAndPassword(email, password)
-  // .then(async (userCredential) => {
-  //   // Signed in 
-  //   var user = userCredential.user;
-  //   console.log(firebase.auth().currentUser.uid);
-  //   firebase.firestore().collection('user').doc(firebase.auth().currentUser.uid)
-  //   .set({
-  //       firstName: fname,
-  //       lastName: lname,
-  //       email: email
-  //   })
-  //   // ...
-  // })
-  // .catch((error) => {
-  //   var errorCode = error.code;
-  //   var errorMessage = error.message;
-  //   // ..
-  // });
-
 }
