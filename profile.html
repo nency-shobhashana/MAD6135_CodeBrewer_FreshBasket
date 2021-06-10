@@ -11,7 +11,9 @@
 
 
 	<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
+	
 		  <!-- TODO: Add SDKs for Firebase products that you want to use
 			   https://firebase.google.com/docs/web/setup#available-libraries -->
 	<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-analytics.js"></script>
@@ -115,7 +117,7 @@
 
                               <div class="form-group">
                                 <label for="validationCustom03">Contact</label>
-                                <input type="text" class="form-control" id="validationCustom02" required>
+                                <input type="text" class="form-control" id="validationCustom03" required>
                                 <div class="valid-feedback">
                                   Looks good!
                                 </div>
@@ -129,6 +131,11 @@
                                 </div>
                               </div>
                         </form>
+
+						<div class="button">
+							<button type="button" onclick="fetchData()">Registration New User</button>
+						</div>
+
                     </div>
                 </div>
                 <div class="col col-sm-3"></div>
