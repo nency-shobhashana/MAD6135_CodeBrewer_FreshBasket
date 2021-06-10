@@ -25,7 +25,7 @@ rel="stylesheet">
 
 </head>
 
-<body id="page-top">
+<body id="page-top" onload="initCategory()">
 
 <!-- Page Wrapper -->
 <div id="wrapper">
@@ -180,59 +180,14 @@ rel="stylesheet">
                 </tr>
               </tfoot>
               <tbody>
-                  <tr>
+                  <tr w3-repeat="categories">
                       <td>
-                        <a href="#" class="btn btn-warning btn-circle btn-md" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit"></i></a>
-                        <a href="#" class="btn btn-danger btn-circle btn-md" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-trash"></i></a>
+                        <a href="javascript:void(0);" onclick="editCategory();" class="btn btn-warning btn-circle btn-md" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit"></i></a>
+                        <a href="javascript:void(0);" data-id="{{name}}" class="btn btn-danger btn-circle btn-md deleteCategoryButton" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-trash"></i></a>
                       </td>
-                      <td>Vegetables</td>
-                      <td>images/vegetables.png</td>
-                      <td>15</td>
-                  </tr>
-                  <tr>
-                      <td>
-                        <a href="#" class="btn btn-warning btn-circle btn-md" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit"></i></a>
-                        <a href="#" class="btn btn-danger btn-circle btn-md" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-trash"></i></a>
-                      </td>
-                      <td>Snacks</td>
-                      <td>images/snacks.png</td>
-                      <td>15</td>
-                  </tr>
-                  <tr>
-                      <td>
-                        <a href="#" class="btn btn-warning btn-circle btn-md" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit"></i></a>
-                        <a href="#" class="btn btn-danger btn-circle btn-md" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-trash"></i></a>
-                      </td>
-                      <td>Fruits</td>
-                      <td>images/fruits.png</td>
-                      <td>15</td>
-                  </tr>
-                  <tr>
-                      <td>
-                        <a href="#" class="btn btn-warning btn-circle btn-md" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit"></i></a>
-                        <a href="#" class="btn btn-danger btn-circle btn-md" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-trash"></i></a>
-                      </td>
-                      <td>Dairy</td>
-                      <td>images/dairy.png</td>
-                      <td>15</td>
-                  </tr>
-                  <tr>
-                      <td>
-                        <a href="#" class="btn btn-warning btn-circle btn-md" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit"></i></a>
-                        <a href="#" class="btn btn-danger btn-circle btn-md" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-trash"></i></a>
-                      </td>
-                      <td>Pantry</td>
-                      <td>images/pantry.png</td>
-                      <td>15</td>
-                  </tr>
-                  <tr>
-                      <td>
-                        <a href="#" class="btn btn-warning btn-circle btn-md" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit"></i></a>
-                        <a href="#" class="btn btn-danger btn-circle btn-md" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-trash"></i></a>
-                      </td>
-                      <td>Cleaning</td>
-                      <td>images/cleaning.png</td>
-                      <td>15</td>
+                      <td>{{name}}</td>
+                      <td>{{image}}</td>
+                      <td>{{count}}</td>
                   </tr>
               </tbody>
             </table>
@@ -274,7 +229,7 @@ aria-hidden="true">
     <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Add New Category</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <button class="close" type="button" id="addclose" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span>
             </button>
         </div>
@@ -292,7 +247,7 @@ aria-hidden="true">
         </div>
         <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-orange" href="login.html">Add</a>
+            <a class="btn btn-orange" href="javascript:void(0);" onclick="addCategory();">Add</a>
         </div>
     </div>
   </div>
@@ -321,7 +276,7 @@ aria-hidden="true">
         </div>
         <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-orange" href="login.html">Edit</a>
+            <a class="btn btn-orange" href="categories.html">Edit</a>
         </div>
     </div>
   </div>
@@ -334,14 +289,14 @@ aria-hidden="true">
     <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Ready to Delete?</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close" id="deleteCategoryClose">
                 <span aria-hidden="true">×</span>
             </button>
         </div>
         <div class="modal-body">Are you sure you want to delete?</div>
         <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-orange" href="products.html">Delete</a>
+            <a class="btn btn-orange" value = "" onclick="deleteCategory(this.value);" href="javascript:void(0);">Delete</a>
         </div>
     </div>
   </div>
@@ -383,6 +338,12 @@ aria-hidden="true">
 
 <!-- Page level custom scripts -->
 <script src="js/demo/datatables-demo.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js"></script>
+<script src="https://www.w3schools.com/lib/w3.js"></script>
+<script type="text/javascript" src="js/firebase-admin.js"></script>
 
 </body>
 
