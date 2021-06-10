@@ -16,14 +16,16 @@
 	<!-- TODO: Add SDKs for Firebase products that you want to use
 	     https://firebase.google.com/docs/web/setup#available-libraries -->
 	<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-analytics.js"></script>
-	<script type="text/javascript" src="js/firebaseinit.js"></script>
+  
 
-
-
-
-    <title>Fresh Basket - Register</title>
+  <title>Fresh Basket - Register</title>
   </head>
   <body>
+
+  <script type="text/javascript" src="js/firebaseinit.js"></script>
+  <script src = "js/register.js"></script>
+
+
     <header>
         <div class="top-header">
             <div class="container">
@@ -115,7 +117,7 @@
                                 <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
                               </div>
                               <div class="button">
-                                <button onclick="registerUser()">Registration New User</button>
+                                <button type="button" onclick="registerUser()">Registration New User</button>
                             </div>
                             <div class="link">Already have Account?
                                 <a href="login.html" class="text-green">Login Here</a>
@@ -168,9 +170,6 @@
         </div>
     </footer>
 
-
-
-
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -193,13 +192,6 @@
         });
       }, false);
     })();
-
-
-
-
-
-
-
 
 
     </script>

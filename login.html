@@ -9,9 +9,25 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/main.css">
 
-    <title>Fresh Basket - Login</title>
+	    <!-- The core Firebase JS SDK is always required and must be listed first -->
+	<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
+		  <!-- TODO: Add SDKs for Firebase products that you want to use
+			   https://firebase.google.com/docs/web/setup#available-libraries -->
+	<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-analytics.js"></script>
+	<script src="js/firebaseinit.js"></script>
+	<script src = "js/login.js"></script>
+
+
+
+
+<title>Fresh Basket - Login</title>
   </head>
   <body>
+
+	<!-- <script src="js/firebaseinit.js"></script>
+	<script src = "js/login.js"></script> -->
+
     <header>
     	<div class="top-header">
     		<div class="container">
@@ -26,7 +42,7 @@
 				      	<div class="input-group">
 								  <input type="text" class="form-control" placeholder="Search by category or product" aria-label="Search by category or product" aria-describedby="button-addon2">
 								  <button class="btn btn-outline-secondary" type="button" id="button-addon2">search</button>
-								</div>
+						</div>
 				      </div>
 				    </div>
 				    <div class="col  col-sm-2 utilities-col">
@@ -73,21 +89,21 @@
     				<div class="login-section">
     					<form>
 							  <div class="form-group">
-							    <label for="exampleInputEmail1">Email address</label>
-							    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+							    <label for="email">Email address</label>
+							    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
 							    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
 							  </div>
 							  <div class="form-group">
-							    <label for="exampleInputPassword1">Password</label>
-							    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+							    <label for="password">Password</label>
+							    <input type="password" class="form-control" id="password" placeholder="Password">
 							  </div>
 							  <div class="button">
-	    						<button type="submit" class="btn btn-primary btn-orange">Sign In</button>
+	    						<button type="button" onclick="login()">Sign In</button>
 	    					</div>
 	    					<div class="link">Don't have Account?
 	    						<a href="register.html" class="text-green">Register Here</a>
 	    					</div>
-							</form>
+						</form>
     				</div>
     			</div>
     			<div class="col col-sm-3"></div>

@@ -13,36 +13,33 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
+// function registerUser()
+// {
+//   console.log('Aparna');
+//     var fname = document.getElementById('validationCustom01').value;
+//     var lname = document.getElementById('validationCustom02').value;
+//     var email = document.getElementById('validationCustomUsername').value;
+//     var password = document.getElementById('exampleInputPassword1').value;
+//     firebase.auth().createUserWithEmailAndPassword(email,password).then(function()
+//     {
+//       alert('User Register successfully');
+//       console.log('User Registration Succesfully');
+//       var id=firebase.auth().currentUser.uid;
+//       firebase.database().ref('Users/'+id).set({
+//       firstName:fname,
+//       lastName:lname,
+//       emaill:email,
+//       // UserAge:age,
 
-const auth = firebase.auth();
+//       });
+//    }).catch(function(error){
 
-function registerUser()
-{
-  console.log('Aparna');
-    var fname = document.getElementById('validationCustom01').value;
-    var lname = document.getElementById('validationCustom02').value;
-    var email = document.getElementById('validationCustomUsername').value;
-    var password = document.getElementById('exampleInputPassword1').value;
-    firebase.auth().createUserWithEmailAndPassword(email,password).then(function()
-    {
-      alert('User Register successfully');
-      console.log('User Registration Succesfully');
-      var id=firebase.auth().currentUser.uid;
-      firebase.database().ref('Users/'+id).set({
-      firstName:fname,
-      lastName:lname,
-      emaill:email,
-      // UserAge:age,
+//     var errorcode=error.code;
+//     var errormsg=error.message;
 
-      });
-   }).catch(function(error){
-
-    var errorcode=error.code;
-    var errormsg=error.message;
-
-   });
+//    });
 
 
 
-}
+// }
     
