@@ -1,20 +1,4 @@
 
-
-firebase.auth().onAuthStateChanged(function(user) {
-if (user) 
-{
-     window.location = 'index.html';
-     console.log("Welcome");
-    
-} 
-else 
-{
-      // No user is signed in.
-      console.log("you have to sign in");
-}
-});
-
-
 function login()
 {
     console.log('Working');
@@ -24,9 +8,6 @@ function login()
 
     firebase.auth().signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
-    // Signed in
-    // console.log(userCredential);
-    // var user = userCredential.user;
     console.log("Signed In");
     window.location = 'index.html';
     // ...

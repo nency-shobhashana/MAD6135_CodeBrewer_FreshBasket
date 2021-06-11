@@ -8,22 +8,32 @@ function registerUser()
     var lname = document.getElementById('validationCustom02').value;
     var email = document.getElementById('validationCustomUsername').value;
     var password = document.getElementById('exampleInputPassword1').value;
+    var db =  firebase.firestore();
+
 
     console.log('Welcome to register page');
     firebase.auth().createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
-      console.log(firebase.auth().currentUser.uid);
-      var dbRef =  firebase.firestore().collection('user').doc(firebase.auth().currentUser.uid);
-      //var dbRef =  firebase.firestore().collection('user');
-      dbRef.set({
+      
+        db.collection("user").doc(firebase.auth().currentUser.uid).set({
         firstname: fname,
-        lastname: lname
-        })
-        //window.location = 'login.html';
-    } ).catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // ..
-        window.alert("Error: " + errorMessage);
-      });
+        lastname: lname,
+        email: email
+        }).then(() => {
+          alert("You have succesfully done the Registration");
+          console.log("Document successfully written!");
+      }).catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // ..
+          window.alert("Error: " + errorMessage);
+        });
+    }).catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // ..
+      window.alert("Error: " + errorMessage);
+    });
+
 }
+

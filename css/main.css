@@ -156,3 +156,15 @@ a.text-green:hover {
 	background-color: #75C34D;
 	color: #FFF;
 }
+
+
+/* Edit profile */
+.updateBtn
+{
+	
+  text-align: center;
+  text-decoration: none;
+  display: none;
+
+}
+ 
