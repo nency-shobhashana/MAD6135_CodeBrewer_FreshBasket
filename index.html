@@ -17,11 +17,11 @@
 	     https://firebase.google.com/docs/web/setup#available-libraries -->
 	<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-analytics.js"></script>
 	<script type="text/javascript" src="js/firebaseinit.js"></script>
-	<script src = "js/index.js"></script>
+	<script src = "js/main.js"></script>
 
     <title>Fresh Basket</title>
   </head>
-  <body>
+  <body onload="authenticateUser()">
     <header>
     	<div class="top-header">
     		<div class="container">
@@ -43,8 +43,8 @@
 				      <div class="user-utilities">
 				      	<div class="row">
 				      		<div class="col-sm-4 text-right"></div>
-				      		<div class="col-sm-4 text-right">
-				      			<a href="profile.html">
+				      		<div class="col-sm-4 text-right" id="myProfile">
+				      			<a>
 				      				<img src="images/profile.png" width="35">
 				      			</a>
 				      		</div>

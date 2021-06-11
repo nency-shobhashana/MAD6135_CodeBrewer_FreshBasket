@@ -9,7 +9,25 @@ function login()
     firebase.auth().signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
     console.log("Signed In");
-    window.location = 'index.html';
+
+    firebase.firestore().collection("user").doc(firebase.auth().currentUser.uid).get() 
+    .then(function(doc){
+      if(doc.exists)
+      {
+
+        var type = doc.data().type;
+        console.log(type)
+        if(type == "admin")
+        {
+            window.location = 'admin/index.html';
+        }
+        else
+        {
+            window.location = 'index.html';
+        } 
+      }
+     
+    })
     // ...
   })
   .catch((error) => {

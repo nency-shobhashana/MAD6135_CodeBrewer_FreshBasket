@@ -62,9 +62,10 @@ function logout()
 });
 }
 
+
+
 function updateUser()
 {
-
   const db = firebase.firestore();
   var fnamev = document.getElementById('validationCustom01').value;
   var lnamev = document.getElementById('validationCustom02').value;

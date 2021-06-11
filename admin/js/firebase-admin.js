@@ -65,3 +65,12 @@ function deleteCategory(name) {
 function editCategory() {
 	
 }
+
+function logOut()
+{
+  firebase.auth().signOut().then(() => {
+    window.location = 'login.html';
+}).catch((error) => {
+  console.error("Error in updating data", error);
+});
+}

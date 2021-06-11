@@ -18,7 +18,8 @@ function registerUser()
         db.collection("user").doc(firebase.auth().currentUser.uid).set({
         firstname: fname,
         lastname: lname,
-        email: email
+        email: email,
+        type: "user"
         }).then(() => {
           alert("You have succesfully done the Registration");
           console.log("Document successfully written!");
