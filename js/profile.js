@@ -63,7 +63,6 @@ function logout()
 }
 
 
-
 function updateUser()
 {
   const db = firebase.firestore();

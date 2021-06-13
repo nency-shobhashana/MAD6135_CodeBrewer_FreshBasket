@@ -9,9 +9,20 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/main.css">
 
+	<!-- The core Firebase JS SDK is always required and must be listed first -->
+	<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
+	<!-- TODO: Add SDKs for Firebase products that you want to use
+	     https://firebase.google.com/docs/web/setup#available-libraries -->
+	<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-analytics.js"></script>
+	<script type="text/javascript" src="js/firebaseinit.js"></script>
+	<script src = "js/main.js"></script>
+
     <title>Fresh Basket - Products</title>
   </head>
-  <body>
+
+  <body onload="fetchProductData()">
     <header>
     	<div class="top-header">
     		<div class="container">
@@ -66,98 +77,17 @@
     		<div class="container">
     			<div class="row">
     				<div class="col">
-    					<h3 class="text-green mt-30">VEGETABLES</h3>
+    					<h3 class="text-green mt-30 uppercase" id="cat-name"></h3>
     				</div>
     			</div>
-	    		<div class="row">
-	    			<div class="col col-sm-4 mb-20">
-	    				<div class="product-box">
-		    				<a href="productDetail.html" class="text-green">
-		    					<div class="product-image">
-		    						<img src="images/card_image 1.png">
-		    					</div>
-		    					<div class="product-name">Product 1</div>
-		    					<div class="product-price">$20.99</div>
-		    				</a>
-		    					<div class="product-add button">
-		    						<button type="button" class="btn btn-primary btn-orange">ADD</button>
-		    					</div>
-	    				</div>
-	    			</div>
-	    			<div class="col col-sm-4 mb-20">
-	    				<div class="product-box">
-		    				<a href="productDetail.html" class="text-green">	
-		    					<div class="product-image">
-		    						<img src="images/card_image 2.png">
-		    					</div>
-		    					<div class="product-name">Product 2</div>
-		    					<div class="product-price">$20.99</div>
-		    				</a>
-	    					<div class="product-add button">
-	    						<button type="button" class="btn btn-primary btn-orange">ADD</button>
-	    					</div>
-	    				</div>
-	    			</div>
-	    			<div class="col col-sm-4 mb-20">
-	    				<div class="product-box">
-		    				<a href="productDetail.html" class="text-green">	
-		    					<div class="product-image">
-		    						<img src="images/card_image 3.png">
-		    					</div>
-		    					<div class="product-name">Product 3</div>
-		    					<div class="product-price">$20.99</div>
-		    				</a>
-	    					<div class="product-add button">
-	    						<button type="button" class="btn btn-primary btn-orange">ADD</button>
-	    					</div>
-	    				</div>
-	    			</div>
-	    			<div class="col col-sm-4 mb-20">
-	    				<div class="product-box">
-		    				<a href="productDetail.html" class="text-green">
-		    					<div class="product-image">
-		    						<img src="images/card_image 2.png">
-		    					</div>
-		    					<div class="product-name">Product 4</div>
-		    					<div class="product-price">$20.99</div>
-		    				</a>
-	    					<div class="product-add button">
-		    					<button type="button" class="btn btn-primary btn-orange">ADD</button>
-		    				</div>
-	    				</div>
-	    			</div>
-	    			<div class="col col-sm-4 mb-20">
-	    				<div class="product-box">
-	    					<a href="productDetail.html" class="text-green">
-		    					<div class="product-image">
-		    						<img src="images/card_image 3.png">
-		    					</div>
-		    					<div class="product-name">Product 3</div>
-		    					<div class="product-price">$20.99</div>
-		    				</a>
-	    					<div class="product-add button">
-	    						<button type="button" class="btn btn-primary btn-orange">ADD</button>
-	    					</div>
-	    				</div>
-	    			</div>
-	    			<div class="col col-sm-4 mb-20">
-	    				<div class="product-box">
-		    				<a href="productDetail.html" class="text-green">
-		    					<div class="product-image">
-		    						<img src="images/card_image 2.png">
-		    					</div>
-		    					<div class="product-name">Product 4</div>
-		    					<div class="product-price">$20.99</div>
-	    					</a>
-	    					<div class="product-add button">
-		    					<button type="button" class="btn btn-primary btn-orange">ADD</button>
-		    				</div>
-	    				</div>
-	    			</div>
-	    		</div>
+
+				<div class="row" id="accordion">
+
+				</div>
+	    		
 	    	</div>
     	</div>
-    </main>
+</main>
 
     <footer>
     	<div class="footer-section">

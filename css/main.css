@@ -168,3 +168,39 @@ a.text-green:hover {
 
 }
  
+/* Card in product list */
+
+.card 
+{
+	
+	background-color: #F7F4F4;
+}
+
+.product-add button
+{
+	width: 100%;
+	background-color: #F07D4A;
+	border-color: #F07D4A;
+	font-weight: bold;
+}
+.button button:hover,
+.button button:focus {
+	border-color: #F07D4A;
+	background-color: #FFF;
+	color: #F07D4A;
+}
+
+.card p
+{
+	color:#75C34D;
+}
+
+.card .product-image img
+{
+	width: 100%;
+	vertical-align: middle;
+    border-style: none;
+}
+.uppercase{
+	text-transform: uppercase;
+}
