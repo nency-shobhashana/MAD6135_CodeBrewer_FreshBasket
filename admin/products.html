@@ -25,8 +25,7 @@ rel="stylesheet">
 
 </head>
 
-<body id="page-top">
-
+<body id="page-top" onload="initProduct()">
 <!-- Page Wrapper -->
 <div id="wrapper">
 
@@ -50,12 +49,12 @@ rel="stylesheet">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
   </li>
-  <li class="nav-item active">
+  <li class="nav-item">
       <a class="nav-link" href="categories.html">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Categories</span></a>
   </li>
-  <li class="nav-item">
+  <li class="nav-item active">
       <a class="nav-link" href="products.html">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Products</span></a>
@@ -187,53 +186,18 @@ rel="stylesheet">
                 </tr>
               </tfoot>
               <tbody>
-                  <tr>
+                  <tr w3-repeat="products">
                       <td>
-                        <a href="#" class="btn btn-warning btn-circle btn-md" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit"></i></a>
-                        <a href="#" class="btn btn-danger btn-circle btn-md" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-trash"></i></a>
+                        <a href="javascript:void(0);" data-id="{{id}}"
+                        data-name="{{name}}" data-category="{{categoryId}}" data-weight="{{weight}}" data-price="{{price}}" data-detail="{{details}}" data-ingredients="{{ingredients}}" class="btn btn-warning btn-circle btn-md editProductButton" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit"></i></a>
+                        <a href="javascript:void(0);" data-id="{{id}}" class="btn btn-danger btn-circle btn-md deleteProductButton" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-trash"></i></a>
                       </td>
-                      <td>Cucumber</td>
-                      <td>Vegetables</td>
-                      <td>images/cucumber.png</td>
-                      <td>$ 1.05</td>
-                      <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
-                      <td>N/A</td>
-                  </tr>
-                  <tr>
-                      <td>
-                        <a href="#" class="btn btn-warning btn-circle btn-md" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit"></i></a>
-                        <a href="#" class="btn btn-danger btn-circle btn-md" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-trash"></i></a>
-                      </td>
-                      <td>Chips</td>
-                      <td>Snacks</td>
-                      <td>images/salsa.png</td>
-                      <td>$ 3.00</td>
-                      <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</td>
-                      <td>Tomato pure, onions, water</td>
-                  </tr>
-                  <tr>
-                      <td>
-                        <a href="#" class="btn btn-warning btn-circle btn-md" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit"></i></a>
-                        <a href="#" class="btn btn-danger btn-circle btn-md" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-trash"></i></a>
-                      </td>
-                      <td>Bread</td>
-                      <td>Dairy</td>
-                      <td>images/bread.png</td>
-                      <td>$ 2.49</td>
-                      <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</td>
-                      <td>flour, milk, baking powder, baking soda, wakter</td>
-                  </tr>
-                  <tr>
-                      <td>
-                        <a href="#" class="btn btn-warning btn-circle btn-md" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit"></i></a>
-                        <a href="#" class="btn btn-danger btn-circle btn-md" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-trash"></i></a>
-                      </td>
-                      <td>Salsa</td>
-                      <td>Snacks</td>
-                      <td>images/salsa.png</td>
-                      <td>$ 5.26</td>
-                      <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</td>
-                      <td>Tomato pure, onions, water</td>
+                      <td>{{name}}</td>
+                      <td>{{category}}</td>
+                      <td>{{image}}</td>
+                      <td>{{priceString}}</td>
+                      <td>{{details}}</td>
+                      <td>{{ingredients}}</td>
                   </tr>
               </tbody>
             </table>
@@ -268,14 +232,14 @@ rel="stylesheet">
 <i class="fas fa-angle-up"></i>
 </a>
 
-<!-- Add or Edit -->
+<!-- Add -->
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Add New Product</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <button class="close" type="button" id="addclose" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span>
             </button>
         </div>
@@ -287,14 +251,8 @@ aria-hidden="true">
             </div>
             <div class="form-group">
               <label for="product">Choose Category of Product:</label>
-              <select name="product" id="products" class="form-control">
-                <option value="Vegetables">Vegetables</option>
-                <option value="Vegetables">Vegetables</option>
-                <option value="Fruits">Fruits</option>
-                <option value="Dairy">Dairy</option>
-                <option value="Snacks">Snacks</option>
-                <option value="Pantry">Pantry</option>
-                <option value="Cleaning">Cleaning</option>
+              <select name="product" id="AddProductCategory" class="form-control">
+                <option w3-repeat="categories" value="{{id}}">{{name}}</option>
               </select>
             </div>
             <div class="form-group">
@@ -302,20 +260,23 @@ aria-hidden="true">
               <input type="file">
             </div>
             <div class="form-group">
+              <input type="number" class="form-control" id="productWeight" aria-describedby="emailHelp" placeholder="Enter Product weight">
+            </div>
+            <div class="form-group">
               <input type="number" class="form-control" id="productPrice" aria-describedby="emailHelp" placeholder="Enter Product Price">
             </div>
             <div class="form-group">
-              <textarea placeholder="Enter Product Description..." rows="4" cols="50"></textarea>
+              <textarea id="productDetail" placeholder="Enter Product Description..." rows="4" cols="50"></textarea>
             </div>
             <div class="form-group">
-              <textarea placeholder="Enter Product Ingredients..." rows="4" cols="50"></textarea>
+              <textarea id="productIngredients" placeholder="Enter Product Ingredients..." rows="4" cols="50"></textarea>
             </div>
         </form>
 
         </div>
         <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-orange" href="products.html">Add</a>
+            <a class="btn btn-orange" href="javascript:void(0);" onclick="addProduct();">Add</a>
         </div>
     </div>
   </div>
@@ -326,7 +287,7 @@ aria-hidden="true">
     <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Edit Product</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close" id="editClose">
                 <span aria-hidden="true">×</span>
             </button>
         </div>
@@ -334,18 +295,12 @@ aria-hidden="true">
           
           <form>
             <div class="form-group">
-              <input type="text" class="form-control" id="productName" aria-describedby="emailHelp" placeholder="Enter Product Name">
+              <input type="text" class="form-control" id="editProductName" aria-describedby="emailHelp" placeholder="Enter Product Name">
             </div>
             <div class="form-group">
               <label for="product">Choose Category of Product:</label>
-              <select name="product" id="products" class="form-control">
-                <option value="Vegetables">Vegetables</option>
-                <option value="Vegetables">Vegetables</option>
-                <option value="Fruits">Fruits</option>
-                <option value="Dairy">Dairy</option>
-                <option value="Snacks">Snacks</option>
-                <option value="Pantry">Pantry</option>
-                <option value="Cleaning">Cleaning</option>
+              <select name="product" id="editProductCategory" class="form-control">
+                <option w3-repeat="categories" value="{{id}}">{{name}}</option>
               </select>
             </div>
             <div class="form-group">
@@ -353,20 +308,23 @@ aria-hidden="true">
               <input type="file">
             </div>
             <div class="form-group">
-              <input type="number" class="form-control" id="productPrice" aria-describedby="emailHelp" placeholder="Enter Product Price">
+              <input type="number" class="form-control" id="editProductWeight" aria-describedby="emailHelp" placeholder="Enter Product Price">
             </div>
             <div class="form-group">
-              <textarea placeholder="Enter Product Description..." rows="4" cols="50"></textarea>
+              <input type="number" class="form-control" id="editProductPrice" aria-describedby="emailHelp" placeholder="Enter Product Price">
             </div>
             <div class="form-group">
-              <textarea placeholder="Enter Product Ingredients..." rows="4" cols="50"></textarea>
+              <textarea placeholder="Enter Product Description..." rows="4" cols="50" id="editProductDetail"></textarea>
+            </div>
+            <div class="form-group">
+              <textarea placeholder="Enter Product Ingredients..." rows="4" cols="50" id="editProductIngredients"></textarea>
             </div>
         </form>
 
         </div>
         <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-orange" href="products.html">Edit</a>
+            <a class="btn btn-orange"  value = "" onclick="editProduct(this.value);" href="javascript:void(0);">Edit</a>
         </div>
     </div>
   </div>
@@ -379,14 +337,14 @@ aria-hidden="true">
     <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Ready to Delete?</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close" id="deleteProductClose">
                 <span aria-hidden="true">×</span>
             </button>
         </div>
         <div class="modal-body">Are you sure you want to delete?</div>
         <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-orange" href="products.html">Delete</a>
+            <a class="btn btn-orange" value = "" onclick="deleteProduct(this.value);" href="javascript:void(0);">Delete</a>
         </div>
     </div>
   </div>
@@ -432,6 +390,7 @@ aria-hidden="true">
 <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-analytics.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js"></script>
+<script src="https://www.w3schools.com/lib/w3.js"></script>
 <script type="text/javascript" src="js/firebase-admin.js"></script>
 
 </body>
