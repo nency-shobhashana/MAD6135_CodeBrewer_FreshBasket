@@ -1,6 +1,6 @@
 
 /* Authentication of User while loading the home page */
-
+var count = 0;
 function authenticateUser()
 {
       firebase.auth().onAuthStateChanged(function(user) {
@@ -87,8 +87,25 @@ function changeHeading()
 
 function addToCart()
 {
-      //Add data to cart database.
-      console.log("This button is working");
+      // //Add data to cart database.
+      count++;
+      const cartId = firebase.auth().currentUser.uid;
+      // console.log(cartId);
+      // console.log("This button is working");
+      // firebase.firestore().collection("user").doc(firebase.auth().currentUser.uid).set({
+      // cartItems: firebase.firestore().collection("cart").doc(cartId)
+      //   }, { merge: true });
+      firebase.firestore().collection("cart").doc(firebase.auth().currentUser.uid).set({
+            [count]: cartId,
+            productCount: count
+            }, { merge: true }).then(() => {
+              console.log("Document successfully written!");
+          }).catch((error) => {
+              var errorCode = error.code;
+              var errorMessage = error.message;
+              // ..
+              window.alert("Error: " + errorMessage);
+            });
 }
 
 
