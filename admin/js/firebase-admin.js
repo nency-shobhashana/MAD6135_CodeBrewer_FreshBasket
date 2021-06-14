@@ -15,15 +15,23 @@ firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
 const db = firebase.firestore();
+const storage = firebase.storage();
+const storageRef = storage.ref();
 
 var categories = {categories:[]}
 
 function initCategory(){
 	categories.categories = [];
-	db.collection("categories").get().then((snapshot) =>{
+	db.collection("categories").get().then((snapshot) => {
+		snapshot.size
 		snapshot.forEach((doc) =>{
-			categories.categories.push({id: doc.id, ...doc.data()});
-			// console.log(doc.id, " => ", doc.data());
+			storage.ref(doc.data().image).getDownloadURL().then((url) => {
+				categories.categories.push({id: doc.id, imagePath: url, ...doc.data()});
+				w3.displayObject("dataTable", categories);
+			}).catch((error) => {
+				categories.categories.push({id: doc.id, ...doc.data()});
+				w3.displayObject("dataTable", categories);
+			});
 		});
 		w3.displayObject("dataTable", categories);
 	});
@@ -39,8 +47,13 @@ function initCategory(){
 
 function addCategory(){
 	const name = document.getElementById('categoryName').value
-	if(name != null && name.trim() != ""){
-		db.collection("categories").add({name: name, count: 0, image: ""}).then(() => {
+	const photo = document.getElementById('categoryImage').files[0]
+	if(name != null && name.trim() != "" && photo != null){
+		db.collection("categories").add({name: name, count: 0, image: `images/${photo.name}`}).then(() => {
+	
+			// Upload the file and metadata
+			storageRef.child(`images/${photo.name}`).put(photo)
+			
 			document.getElementById("addclose").click();
 			initCategory();
 		})
@@ -49,21 +62,13 @@ function addCategory(){
 	} 
 }
 
-function refreshCategory(){
-	categories.categories = [];
-	db.collection("categories").get().then((snapshot) =>{
-		snapshot.forEach((doc) =>{
-			categories.categories.push({id: doc.id, ...doc.data()});
-			// console.log(doc.id, " => ", doc.data());
-		});
-		w3.displayObject("dataTable", categories);
-	})
-}
-
 function deleteCategory(id) {
 	const catRef = db.collection("categories").doc(id)
 	catRef.get().then((doc) => {
-		if(doc.data().count == 0){
+		if(categories.categories.length <= 5){
+			document.getElementById("deleteCategoryClose").click();
+			alert("can not delete, min 5 categories needed");
+		} else if(doc.data().count == 0){
 			catRef.delete().then(() => {
 				document.getElementById("deleteCategoryClose").click();
 				initCategory();
@@ -77,8 +82,16 @@ function deleteCategory(id) {
 
 function editCategory(id) {
 	const name = document.getElementById('editCategoryName').value
-	if(name != null && name.trim() != ""){
-		db.collection("categories").doc(id).set({name: name},{merge: true}).then(() => {
+	const photo = document.getElementById('editCategoryImage').files[0]
+	if(name != null && name.trim() != "" ){
+		var newObj = {name: name}
+
+		if(photo != null){
+			newObj = {...newObj, image: `images/${photo.name}`}
+			storageRef.child(`images/${photo.name}`).put(photo)
+		}
+
+		db.collection("categories").doc(id).set(newObj,{merge: true}).then(() => {
 			document.getElementById("editClose").click();
 			initCategory();
 		})
@@ -97,10 +110,13 @@ function loadCategories(){
 		});
 		w3.displayObject("AddProductCategory", categories);
 		w3.displayObject("editProductCategory", categories);
+		document.getElementById("editProductCategory").value = $("#editModal #editProductCategorylbl").data("category");
 	});
 }
 
 $('#addModal').on('show.bs.modal', function () {
+	// document.getElementById('categoryName').value = ""
+	// document.getElementById('categoryImage').value = ""
   loadCategories()
 })
 $('#editModal').on('show.bs.modal', function () {
@@ -118,11 +134,20 @@ function initProduct(){
 				const [weight, price] = Object.entries(doc.data().price)[0]
 				priceString = `[${weight}: ${price}]`
 
-				products.products.push({id: doc.id, ...doc.data(), 
-					priceString: priceString,
-					price: price, weight: weight,
-					category: ref.data().name, categoryId: ref.id});
-				w3.displayObject("dataTable", products);
+				storage.ref(doc.data().image).getDownloadURL().then((url) => {
+					products.products.push({id: doc.id, ...doc.data(),
+						imagePath: url, 
+						priceString: priceString,
+						price: price, weight: weight,
+						category: ref.data().name, categoryId: ref.id});
+					w3.displayObject("dataTable", products);
+				}).catch((error) => {
+					products.products.push({id: doc.id, ...doc.data(), 
+						priceString: priceString,
+						price: price, weight: weight,
+						category: ref.data().name, categoryId: ref.id});
+					w3.displayObject("dataTable", products);
+				});
 			});
 		});
 	});
@@ -132,7 +157,8 @@ function initProduct(){
 
 	$(document).on("click",".editProductButton", function(){
 		$("#editModal #editProductName").val($(this).data("name"));	
-		$("#editModal #editProductCategory").val($(this).data("category"));	
+		$("#editModal #editProductCategorylbl").data("category", $(this).data("category"));	
+		$("#editModal #editProductCategory").val($("#editModal #editProductCategorylbl").data("category"));
 		$("#editModal #editProductWeight").val($(this).data("weight"));	
 		$("#editModal #editProductPrice").val($(this).data("price"));	
 		$("#editModal #editProductDetail").val($(this).data("detail"));	
@@ -148,18 +174,23 @@ function addProduct(){
 	const price = document.getElementById('productPrice').value
 	const details = document.getElementById('productDetail').value
 	const ingredients = document.getElementById('productIngredients').value
-	if(name != null && name.trim() != ""){
+	const photo = document.getElementById('productImage').files[0]
+	if(name != null && name.trim() != "" && photo != null){
 		const obj = {
 			name: name, 
 			ingredients: ingredients,
 			category:db.collection("categories").doc(categoryID),
 			details: details,
 			price:{},
-			image: ""
+			image: `images/${photo.name}`
 		}
 		obj.price[weight] = parseInt(price)
 		db.collection("products").add(obj).then(() => {
 			var catDocRef = db.collection("categories").doc(categoryID)
+
+			// Upload the file and metadata
+			storageRef.child(`images/${photo.name}`).put(photo)
+
 			db.runTransaction((transaction) => {
 				return transaction.get(catDocRef).then((doc) => {
 					var count = doc.data().count + 1
@@ -183,8 +214,10 @@ function editProduct(id){
 	const price = document.getElementById('editProductPrice').value
 	const details = document.getElementById('editProductDetail').value
 	const ingredients = document.getElementById('editProductIngredients').value
+	const photo = document.getElementById('editProductImage').files[0]
 	if(name != null && name.trim() != ""){
-		const obj = {
+
+		var obj = {
 			name: name, 
 			ingredients: ingredients,
 			category:db.collection("categories").doc(newCategoryID),
@@ -193,6 +226,11 @@ function editProduct(id){
 			image: ""
 		}
 		obj.price[weight] = parseInt(price)
+
+		if(photo != null){
+			obj = {...obj, image: `images/${photo.name}`}
+			storageRef.child(`images/${photo.name}`).put(photo)
+		}
 
 		db.runTransaction((transaction) => {
 			const prodRef = db.collection("products").doc(id)
@@ -224,7 +262,6 @@ function editProduct(id){
 	} 
 }
 
-
 function deleteProduct(name) {
 	db.collection("products").doc(name).delete().then(() => {
 		document.getElementById("deleteProductClose").click();
@@ -232,11 +269,23 @@ function deleteProduct(name) {
 	})
 }
 
-function logOut()
-{
+function getProductCount(){
+	db.collection("products").get().then(snap => {
+		document.getElementById('totalProductCount').innerHTML = snap.size;
+	});
+	
+}
+
+function getCategoryCount(){
+	db.collection("categories").get().then(snap => {
+	document.getElementById('totalCategoryCount').innerHTML = snap.size;
+	});
+}
+
+function logOut(){
   firebase.auth().signOut().then(() => {
     window.location = 'login.html';
-}).catch((error) => {
-  console.error("Error in updating data", error);
-});
+	}).catch((error) => {
+  	console.error("Error in updating data", error);
+	});
 }

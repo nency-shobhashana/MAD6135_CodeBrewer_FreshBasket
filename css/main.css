@@ -70,12 +70,18 @@ main .button button {
 	background-color: #F07D4A;
 	border-color: #F07D4A;
 	font-weight: bold;
+	color: #FFF;
 }
 main .button button:hover,
 main .button button:focus {
-	border-color: #F07D4A;
-	background-color: #FFF;
-	color: #F07D4A;
+	border-color: #F07D4A !important;
+	background-color: #FFF !important;
+	color: #F07D4A !important;
+	box-shadow: none !important;
+}
+.form-control:focus {
+	box-shadow: none !important;
+	border-color: #F07D4A !important;
 }
 
 

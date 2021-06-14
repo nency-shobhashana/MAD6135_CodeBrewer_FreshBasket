@@ -61,12 +61,12 @@ rel="stylesheet">
           <span>Products</span></a>
   </li>
   <li class="nav-item">
-      <a class="nav-link" href="orders.html">
+      <a class="nav-link" href="index.html">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Orders</span></a>
   </li>
   <li class="nav-item">
-      <a class="nav-link" href="user-info.html">
+      <a class="nav-link" href="index.html">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>User Info</span></a>
   </li>
@@ -186,7 +186,7 @@ rel="stylesheet">
                         <a href="javascript:void(0);" data-id="{{id}}" class="btn btn-danger btn-circle btn-md deleteCategoryButton" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-trash"></i></a>
                       </td>
                       <td>{{name}}</td>
-                      <td>{{image}}</td>
+                      <td><img src="{{imagePath}}" alt="{{image}}" width="70" height="70"></td>
                       <td>{{count}}</td>
                   </tr>
               </tbody>
@@ -240,7 +240,7 @@ aria-hidden="true">
               <input type="text" class="form-control form-control-user" id="categoryName" aria-describedby="emailHelp" placeholder="Enter Category Name">
             </div>
             <div class="form-group">
-              <input type="file">
+              <input type="file" id="categoryImage" accept="image/*" name="files[]">
             </div>
         </form>
 
@@ -269,7 +269,7 @@ aria-hidden="true">
                 <input type="text" class="form-control form-control-user" id="editCategoryName" aria-describedby="emailHelp" placeholder="Enter Category Name">
             </div>
             <div class="form-group">
-                <input type="file">
+              <input type="file" id="editCategoryImage" accept="image/*" name="files[]">
             </div>
         </form>
 
@@ -342,6 +342,7 @@ aria-hidden="true">
 <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-analytics.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-storage.js"></script>
 <script src="https://www.w3schools.com/lib/w3.js"></script>
 <script type="text/javascript" src="js/firebase-admin.js"></script>
 

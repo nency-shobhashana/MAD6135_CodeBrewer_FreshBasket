@@ -1,8 +1,14 @@
 
 /* Authentication of User while loading the home page */
+
+function initPage(){
+  initCategory()
+  authenticateUser()
+}
 var count = 0;
 function authenticateUser()
 {
+
       firebase.auth().onAuthStateChanged(function(user) {
       if (user) 
       {          
@@ -69,8 +75,8 @@ function displayCard(doc)
                   <h5>${result.name}</h5>
                   <p>$${result.price[1]}</p>
                   <div class="product-add button">
-		            <button type="button" class="btn btn-primary btn-orange" onclick="addToCart()">ADD</button>
-	             </div>
+                <button type="button" class="btn btn-primary btn-orange" onclick="addToCart()">ADD</button>
+               </div>
              </div>
        </div>
      </div>
@@ -82,7 +88,7 @@ function displayCard(doc)
 
 function changeHeading()
 {
-      document.getElementById("cat-name").innerText = getQueryParams('cat');
+      document.getElementById("cat-name").innerText = getQueryParams('name');
 }
 
 function addToCart()
@@ -96,16 +102,45 @@ function addToCart()
       // cartItems: firebase.firestore().collection("cart").doc(cartId)
       //   }, { merge: true });
       firebase.firestore().collection("cart").doc(firebase.auth().currentUser.uid).set({
-            [count]: cartId,
-            productCount: count
-            }, { merge: true }).then(() => {
-              console.log("Document successfully written!");
-          }).catch((error) => {
-              var errorCode = error.code;
-              var errorMessage = error.message;
-              // ..
-              window.alert("Error: " + errorMessage);
-            });
+        [count]: cartId,
+        productCount: count
+        }, { merge: true }).then(() => {
+          console.log("Document successfully written!");
+      }).catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // ..
+          window.alert("Error: " + errorMessage);
+        });
+}
+
+var categories = {categories:[]}
+
+function initCategory(){
+  const db = firebase.firestore();
+  const storage = firebase.storage();
+  const storageRef = storage.ref();
+  categories.categories = [];
+  db.collection("categories").get().then((snapshot) =>{
+    snapshot.forEach((doc) =>{
+      storage.ref(doc.data().image).getDownloadURL().then((url) => {
+        categories.categories.push({id: doc.id, imagePath: url, ...doc.data()});
+        w3.displayObject("categoryContainer", categories);
+      }).catch((error) => {
+        categories.categories.push({id: doc.id, ...doc.data()});
+        w3.displayObject("categoryContainer", categories);
+      });
+    });
+    w3.displayObject("categoryContainer", categories);
+  });
+  $(document).on("click",".deleteCategoryButton", function(){
+    $("#deleteModal .modal-footer a").val($(this).data("id"));
+  })
+
+  $(document).on("click",".editCategoryButton", function(){
+    $("#editModal #editCategoryName").val($(this).data("name"));    
+    $("#editModal .modal-footer a").val($(this).data("id"));    
+  })
 }
 
 

@@ -13,22 +13,27 @@
 	<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-storage.js"></script>
+	<script src="https://www.w3schools.com/lib/w3.js"></script>
 	<!-- TODO: Add SDKs for Firebase products that you want to use
 	     https://firebase.google.com/docs/web/setup#available-libraries -->
 	<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-analytics.js"></script>
+
 	<script type="text/javascript" src="js/firebaseinit.js"></script>
 	<script src = "js/main.js"></script>
 
     <title>Fresh Basket</title>
   </head>
-  <body onload="authenticateUser()">
+  <body onload="initPage()">
     <header>
     	<div class="top-header">
     		<div class="container">
 				  <div class="row">
 				    <div class="col col-sm-2 logo-col">
 				      <div class="logo">
-				      	<img src="images/logo.png" width="150">
+				      	<a href="index.html">
+				      		<img src="images/logo.png" width="150">
+				      	</a>
 				      </div>
 				    </div>
 				    <div class="col col-sm-8 search-col">
@@ -44,7 +49,7 @@
 				      	<div class="row">
 				      		<div class="col-sm-4 text-right"></div>
 				      		<div class="col-sm-4 text-right" id="myProfile">
-				      			<a href="profile.html">
+				      			<a href="javascript:void(0);">
 				      				<img src="images/profile.png" width="35">
 				      			</a>
 				      		</div>
@@ -67,7 +72,7 @@
 					</div>
     				<div class="col col-sm-2"><a href="index.html">Offers / Deals</a></div>
     				<div class="col col-sm-2"><a href="index.html">Customer Service</a></div>
-    				<div class="col col-sm-2"><a href="index.html">About Us</a></div>
+    				<div class="col col-sm-2"><a href="aboutus.html">About Us</a></div>
     				<div class="col col-sm-1"></div>
     			</div>
     		</div>
@@ -103,56 +108,18 @@
     </div>
     <main>
     	<div class="category text-center">
-	    	<div class="container">
+	    	<div class="container" id="categoryContainer">
 	    		<div class="row">
-	    			<div class="col col-sm-2">
+	    			
+	    			<div class="col col-sm-2" w3-repeat="categories">
 	    				<div class="category-box">
-	    					<a href="products.html">
-		    					<div class="category-img"><img src="images/vegetable.png"></div>
-		    					<div class="category-name text-green">Vegetables</div>
+	    					<a href="products.html?cat={{id}}&name={{name}}">
+		    					<div class="category-img"><img src="{{imagePath}}" alt="{{image}}"></div>
+		    					<div class="category-name text-green">{{name}}</div>
 		    				</a>
 	    				</div>
 	    			</div>
-	    			<div class="col col-sm-2">
-	    				<div class="category-box">
-	    					<a href="javascript:void(0);">
-		    					<div class="category-img"><img src="images/diary.png"></div>
-		    					<div class="category-name text-green">Dairy</div>
-		    				</a>
-	    				</div>
-	    			</div>
-	    			<div class="col col-sm-2">
-	    				<div class="category-box">
-		    				<a href="javascript:void(0);">
-		    					<div class="category-img"><img src="images/fruits.png"></div>
-		    					<div class="category-name text-green">Fruits</div>
-		    				</a>
-	    				</div>
-	    			</div>
-	    			<div class="col col-sm-2">
-	    				<div class="category-box">
-	    					<a href="products.html?cat=pantry">
-		    					<div class="category-img"><img src="images/pantry.png"></div>
-		    					<div class="category-name text-green">Pantry</div>
-		    				</a>
-	    				</div>
-	    			</div>
-	    			<div class="col col-sm-2">
-	    				<div class="category-box" id="snacks">
-	    					<a href="products.html?cat=snacks">
-		    					<div class="category-img"><img src="images/sancks.png"></div>
-		    					<div class="category-name text-green">Snacks</div>
-		    				</a>
-	    				</div>
-	    			</div>
-	    			<div class="col col-sm-2">
-	    				<div class="category-box">
-	    					<a href="javascript:void(0);">
-		    					<div class="category-img"><img src="images/cleaning.png"></div>
-		    					<div class="category-name text-green">Cleaning</div>
-		    				</a>
-	    				</div>
-	    			</div>
+
 	    		</div>
 	    	</div>
     	</div>
