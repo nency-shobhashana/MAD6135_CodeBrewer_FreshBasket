@@ -210,3 +210,50 @@ a.text-green:hover {
 .uppercase{
 	text-transform: uppercase;
 }
+
+.qty-up-button, .qty-down-button
+{
+	color:#75c34d;;
+	border-radius: 5px;
+	background-color: white;
+	box-shadow: none !important;
+
+}
+
+.qty-input
+{
+	color:#75c34d;
+	border-radius: 5px;
+	background-color: white;
+	box-shadow: none !important;
+}
+
+#checkout
+{
+	background-color: #F7F4F4;
+	height: 550px;
+	border-color: wheat;
+	padding-top: 1rem;
+}
+
+#checkout h4, p
+{
+	color: #75c34d;
+}
+
+#checkout span.price {
+	float: right;
+	color: grey;
+  }
+
+.checkout-btn
+{
+	width: 100%;
+	padding-top: 0.2rem;
+	padding-bottom: 0.2rem;
+	background-color: #75c34d;
+	font-weight: bold;
+	color: #FFF;
+	box-shadow: none !important;
+	border-color: #75c34d !important;
+}
