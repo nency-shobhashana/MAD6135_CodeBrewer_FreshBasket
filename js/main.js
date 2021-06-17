@@ -5,7 +5,10 @@ function initPage(){
   initCategory()
   authenticateUser()
 }
+
 var count = 0;
+var orders = [];
+
 function authenticateUser()
 {
 
@@ -227,6 +230,58 @@ function decrease()
 {
     var textBox = document.getElementById("text");
     textBox.value--;
+}
+
+function dataToOrder()
+{
+    const db = firebase.firestore();
+    var userid;
+    
+    firebase.auth().onAuthStateChanged(function(user) {
+    if (user) 
+    {          
+        userid = firebase.auth().currentUser.uid;
+        console.log(userid);
+    } 
+    });
+   
+    db.collection("cart").get().then((snapshot) => {
+        snapshot.docs.forEach(doc => {
+          
+          if(doc.data().userId == userid)
+          {
+            var obj = {productname: doc.data().productname,
+                      productprice: doc.data().productprice}
+            orders.push(obj); 
+          }
+      })
+     addToOrder(orders, userid);
+     console.log(orders);
+   }) 
+
+  
+}
+
+//dataToOrder().then(addToOrder(orders));
+
+function  addToOrder(orders, userid)
+{
+    
+    var docData = {
+      userId: userid,
+      status: "Ordered",
+      products: orders
+    }
+    firebase.firestore().collection("order").doc().set(docData)
+    .then(() => {
+      console.log(orders);
+      console.log("Document successfully written!");
+  }).catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // ..
+      window.alert("Error: " + errorMessage);
+    });
 }
 
 
