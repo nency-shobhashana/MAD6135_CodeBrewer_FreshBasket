@@ -291,7 +291,7 @@ function displayCart(doc,qty)
 
   const checkOutTotal = document.getElementById('totalPrice');
   // totalPrice += parseFloat((result.productprice).match(/(\d+)/)[0]);
-  totalPrice += price;
+  totalPrice += price*qty;
   checkOutTotal.innerHTML = totalPrice;
 }
 
@@ -434,7 +434,7 @@ function addToOrder(orders, userid) {
     .then(() => {
       console.log(orders);
       console.log("Document successfully written!");
-      deleteCart(userid);
+      //deleteCart(userid);
     }).catch((error) => {
       var errorCode = error.code;
       var errorMessage = error.message;
