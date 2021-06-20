@@ -1,7 +1,7 @@
 
 /* Authentication of User while loading the home page */
 
-function initPage(){
+function initPage() {
   initCategory()
   authenticateUser()
 }
@@ -9,77 +9,73 @@ function initPage(){
 var count = 0;
 var orders = [];
 
-function authenticateUser()
-{
+function authenticateUser() {
 
-      firebase.auth().onAuthStateChanged(function(user) {
-      if (user) 
-      {          
-            console.log("You are a logined user");
-            document.getElementById("myProfile").onclick = function () {
-                  location.href = "profile.html";
-              };
-      } 
-      else 
-      {
-            console.log("you have to sign in");
-            document.getElementById("myProfile").onclick = function () {
-                  location.href = "login.html";
-              };
-      }
-});
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      console.log("You are a logined user");
+      document.getElementById("myProfile").onclick = function () {
+        location.href = "profile.html";
+      };
+    }
+    else {
+      console.log("you have to sign in");
+      document.getElementById("myProfile").onclick = function () {
+        location.href = "login.html";
+      };
+    }
+  });
 }
 
 /* fetch data from product table */
 
-function fetchProductData()
-{
-      const db = firebase.firestore();
-      
-      const category = getQueryParams('cat');
-      changeHeading();
-      db.collection("products").get().then((snapshot) => {
-            snapshot.docs.forEach(doc => {
-                //console.log(doc.data().category.path);
-                if(doc.data().category.path == `categories/${category}`)
-                {
-                  //console.log(doc);
-                  displayCard(doc);
-                }
-            })
-      })   
+function fetchProductData() {
+  const db = firebase.firestore();
+
+  const category = getQueryParams('cat');
+  changeHeading();
+  db.collection("products").get().then((snapshot) => {
+    snapshot.docs.forEach(doc => {
+      //console.log(doc.data().category.path);
+      if (doc.data().category.path == `categories/${category}`) {
+        //console.log(doc);
+        displayCard(doc);
+      }
+    })
+  })
 }
 
-function getQueryParams(param)
-{
-      const urlSearchParams = new URLSearchParams(window.location.search);
-      const params = Object.fromEntries(urlSearchParams.entries());
-      return params[param] || "";
+function getQueryParams(param) {
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  const params = Object.fromEntries(urlSearchParams.entries());
+  return params[param] || "";
 }
 
-function displayCard(doc)
-{
+function displayCard(doc) {
 
-    var result = doc.data();
-    var idx = 1;
-    const container = document.getElementById('accordion');
+  var result = doc.data();
+  console.log(result);
+  var idx = 1;
+  const container = document.getElementById('accordion');
 
-    const card = document.createElement('div');
-    
-    const content = `
+  const card = document.createElement('div');
+
+  const content = `
     <div class="col col-sm-4 mb-20">
     <div class="card">
       <div id="collapse-${idx}" class="collapse show" data-parent="#accordion">
             <div class="card-body" id="currentItem">
-                  <div class="product-image">
-                        <img src="images/card_image 2.png">
-                  </div><br>
+
+                  <a href="productDetail.html?itemName=${result.name}&itemPrice=${result.price}&itemDescription=${result.details}&itemIngredients=${result.ingredients}&itemImage=${result.image}">
+                  <div class="product-image"><img src="${result.image}"></div><br>
+                  </a>
+
                   <h5 id="productName">${result.name}</h5>
-                  <p id="productPrice">$${result.price[2]}</p>
+                  <p id="productPrice">$${result.price}</p>
                   <div class="product-add button">
                 <button type="button" class="btn btn-primary btn-orange" id="addTocart" onclick="addToCart()">ADD</button>
                </div>
-             </div>
+            </div>
        </div>
      </div>
    </div>
@@ -88,86 +84,103 @@ function displayCard(doc)
   container.innerHTML += content;
 }
 
-function changeHeading()
-{
-      document.getElementById("cat-name").innerText = getQueryParams('name');
+function changeHeading() {
+  document.getElementById("cat-name").innerText = getQueryParams('name');
 }
 
-function addToCart()
+function fetchProductDetail()
 {
-      // //Add data to cart database.
-    
-      
 
-      firebase.auth().onAuthStateChanged(function(user) {
-        if (user) 
-        {     
-          
-          const userId = firebase.auth().currentUser.uid;
-          var  productName = document.getElementById('productName').innerHTML;
-          var productPrice=  document.getElementById('productPrice').innerHTML;
-    
-        
-          firebase.firestore().collection("cart").doc().set({
-            userId: userId,
-            productname: productName,
-            productprice: productPrice
-    
-            }).then(() => {
-              console.log("Document successfully written!");
-          }).catch((error) => {
-              var errorCode = error.code;
-              var errorMessage = error.message;
-              // ..
-              window.alert("Error: " + errorMessage);
-            });
-        } 
-        else 
-        {
-            alert("You have to sign in to add products");
-        }
+  var itemName = getQueryParams('itemName');
+  var itemPrice = getQueryParams('itemPrice'); 
+  var itemDescription = getQueryParams('itemDescription');
+  var itemIngredients = getQueryParams('itemIngredients');
+  var itemImage = getQueryParams('itemImage');
+
+  var content = `<img src="${itemImage}" width="100%">`;
+
+  document.getElementById("productName").innerHTML = itemName;
+  document.getElementById("productPrice").innerHTML = itemPrice;
+  document.getElementById("itemDescription").innerHTML = itemDescription;
+  document.getElementById("itemIngredients").innerHTML = itemIngredients;
+
+  document.getElementById('itemImage').innerHTML = content;
+
+}
+
+
+/* Add to cart functionaility */
+
+function addToCart() {
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+
+      const userId = firebase.auth().currentUser.uid;
+      var productName = document.getElementById('productName').innerHTML;
+      var productPrice = document.getElementById('productPrice').innerHTML;
+
+
+      firebase.firestore().collection("cart").doc().set({
+        userId: userId,
+        productname: productName,
+        productprice: productPrice
+
+      }).then(() => {
+        console.log("Document successfully written!");
+      }).catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // ..
+        window.alert("Error: " + errorMessage);
       });
+    }
+    else {
+      alert("You have to sign in to add products");
+    }
+  });
+}
 
+
+
+function fetchCartData() {
+  const db = firebase.firestore();
+  var userid;
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      userid = firebase.auth().currentUser.uid;
+      console.log(userid);
+    }
+  });
+
+  db.collection("cart").get().then((snapshot) => {
+    snapshot.docs.forEach(doc => {
+
+      if (doc.data().userId == userid) 
+      {
+        count++;
+        displayCart(doc);
+        displayCheckout(doc);
+      }
       
-}
-
-function fetchCartData()
-{
+    })
    
-    const db = firebase.firestore();
-    var userid;
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (user) 
-      {          
-        userid = firebase.auth().currentUser.uid;
-        console.log(userid);
-      } 
-    });
-    
-    db.collection("cart").get().then((snapshot) => {
-          snapshot.docs.forEach(doc => {
-            
-            if(doc.data().userId == userid)
-            {
-              count++;
-              displayCart(doc);
-              displayCheckout(doc);
-            }
-        })
-     }) 
+  })
+
 }
 
+/* Display data in cart table */
 
+function displayCart(doc) {
 
-function displayCart(doc)
-{
-    var result = doc.data();
-    var idx = 1;
-    const container = document.getElementById('accordion');
+  console.log("cart");
+  var result = doc.data();
+  console.log(result);
+  var idx = 1;
+  const container = document.getElementById('accordion');
 
-    const card = document.createElement('div');
-    
-    const content = `
+  const card = document.createElement('div');
+
+  const content = `
     <div class="col col-sm-12 mb-20">
     <div class="card">
       <div id="collapse-${idx}" class="collapse show" data-parent="#accordion">
@@ -190,7 +203,7 @@ function displayCart(doc)
                   <button class= "qty-down-button type="button" onclick="decrease()">-</button><br><br>
 
                   <div class="remove-cart button">
-                    <button type="button" class="btn btn-primary btn-orange" id="addTocart" onclick="addToCart()">Remove Item</button>
+                    <button type="button" class="btn btn-primary btn-orange" id="removeItem" onclick="singleItemDelete()">Remove Item</button>
                   </div>
                 </div>
              </div>
@@ -205,78 +218,85 @@ function displayCart(doc)
 
 var totalPrice = 0;
 
-function displayCheckout(doc)
+
+function displayCheckout(doc) 
 {
-    var result = doc.data();
-    var idx = 1;
-    const checkOutProduct = document.getElementById('checkoutList');
-    const checkOutTotal = document.getElementById('totalPrice');
-    const totalNumbers = document.getElementById('ItemTotalNumber');
-    const content = `<p><a href="#">${result.productname}</a> <span class="price">${result.productprice}</span></p>`;
-    totalPrice += parseFloat((result.productprice).match(/(\d+)/)[0]);
-    checkOutProduct.innerHTML += content;
-    checkOutTotal.innerHTML = totalPrice;
-    totalNumbers.innerHTML = count;
+
+  console.log("checkout");
+  var result = doc.data();
+  var idx = 1;
+
+  const totalNumbers = document.getElementById('ItemTotalNumber');
+  totalNumbers.innerHTML = count;
+
+  const checkOutProduct = document.getElementById('checkoutList');
+  //const content = `<p><a href="#">${result.productname}</a> <span class="price">${result.productprice}</span></p>`;
+  const content = `<p><a href="#">${result.productname}</a> <span class="price">${result.productprice}</span></p>`;
+  checkOutProduct.innerHTML += content;
+
+  const checkOutTotal = document.getElementById('totalPrice');
+  totalPrice += parseFloat((result.productprice).match(/(\d+)/)[0]);
+  checkOutTotal.innerHTML = totalPrice;
+
 }
 
-function increase()
-{
-    var textBox = document.getElementById("text");
-    textBox.value++;
+function increase() {
+  var textBox = document.getElementById("text");
+  textBox.value++;
 
 }
 
-function decrease()
-{
-    var textBox = document.getElementById("text");
-    textBox.value--;
+function decrease() {
+  var textBox = document.getElementById("text");
+  textBox.value--;
 }
 
-function dataToOrder()
-{
-    const db = firebase.firestore();
-    var userid;
-    
-    firebase.auth().onAuthStateChanged(function(user) {
-    if (user) 
-    {          
-        userid = firebase.auth().currentUser.uid;
-        console.log(userid);
-    } 
-    });
-   
-    db.collection("cart").get().then((snapshot) => {
-        snapshot.docs.forEach(doc => {
-          
-          if(doc.data().userId == userid)
-          {
-            var obj = {productname: doc.data().productname,
-                      productprice: doc.data().productprice}
-            orders.push(obj); 
-          }
-      })
-     addToOrder(orders, userid);
-     console.log(orders);
-   }) 
 
-  
+
+/* Proceed to order and checkout */
+
+function dataToOrder() {
+  const db = firebase.firestore();
+  var userid;
+
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      userid = firebase.auth().currentUser.uid;
+      console.log(userid);
+    }
+  });
+
+  db.collection("cart").get().then((snapshot) => {
+    snapshot.docs.forEach(doc => {
+
+      if (doc.data().userId == userid) {
+        var obj = {
+          productname: doc.data().productname,
+          productprice: doc.data().productprice
+        }
+        orders.push(obj);
+      }
+    })
+    addToOrder(orders, userid);
+    console.log(orders);
+  })
 }
 
 //dataToOrder().then(addToOrder(orders));
 
-function  addToOrder(orders, userid)
-{
-    
-    var docData = {
-      userId: userid,
-      status: "Ordered",
-      products: orders
-    }
-    firebase.firestore().collection("order").doc().set(docData)
+function addToOrder(orders, userid) {
+
+  var docData = {
+    userId: userid,
+    status: "Ordered",
+    products: orders
+  }
+  firebase.firestore().collection("order").doc().set(docData)
     .then(() => {
       console.log(orders);
       console.log("Document successfully written!");
-  }).catch((error) => {
+      deleteCart(userid);
+    }).catch((error) => {
       var errorCode = error.code;
       var errorMessage = error.message;
       // ..
@@ -285,32 +305,118 @@ function  addToOrder(orders, userid)
 }
 
 
-var categories = {categories:[]}
 
-function initCategory(){
+
+function deleteCart(userid) {
+
+  var deleData = firebase.firestore().collection('cart').where('userId', '==', userid);
+  deleData.get().then(function (querySnapshot) {
+    querySnapshot.forEach(function (doc) {
+      doc.ref.delete();
+    });
+  });
+  console.log(deleData);
+}
+
+
+function singleItemDelete() {
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+
+      const userId = firebase.auth().currentUser.uid;
+      var productName = document.getElementById('productName').innerHTML;
+
+      firebase.firestore().collection("cart").get().then((snapshot) => {
+        snapshot.docs.forEach(doc => {
+
+          if ((doc.data().userId == userId) && (doc.data().productname == productName)) {
+            var deleData = firebase.firestore().collection('cart').where('productname', '==', productName);
+            deleData.get().then(function (querySnapshot) {
+              querySnapshot.forEach(function (doc) {
+                doc.ref.delete().then(() => {
+                   
+                })
+              });
+            });
+          }
+        })
+      });
+
+    }
+
+  })
+}
+
+var searchText;
+
+function searchData()
+{
+  searchText = document.getElementById('searchText').value;
+  window.location = 'searchData.html?searchtext='+searchText;
+}
+
+function searchItem()
+{
+  var searchText = getQueryParams('searchtext');
+  document.getElementById('searchText').value = searchText;
+  console.log(searchText);
+  firebase.firestore().collection("products").where("name", "==", searchText)
+    .get()
+    .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+
+            displayCard(doc);
+            console.log(doc.data());
+        });
+    })
+    .catch((error) => {
+        console.log("Error getting documents: ", error);
+    });
+  
+}
+
+
+function productDetail()
+{
+
+  window.location = 'productDetail.html';
+  
+}
+
+
+// function pageRefresh()
+// {
+//   document.location.reload();
+//   console.log("after refresh");
+// }
+/* Product detail page */
+
+var categories = { categories: [] }
+
+function initCategory() {
   const db = firebase.firestore();
   const storage = firebase.storage();
   const storageRef = storage.ref();
   categories.categories = [];
-  db.collection("categories").get().then((snapshot) =>{
-    snapshot.forEach((doc) =>{
+  db.collection("categories").get().then((snapshot) => {
+    snapshot.forEach((doc) => {
       storage.ref(doc.data().image).getDownloadURL().then((url) => {
-        categories.categories.push({id: doc.id, imagePath: url, ...doc.data()});
+        categories.categories.push({ id: doc.id, imagePath: url, ...doc.data() });
         w3.displayObject("categoryContainer", categories);
       }).catch((error) => {
-        categories.categories.push({id: doc.id, ...doc.data()});
+        categories.categories.push({ id: doc.id, ...doc.data() });
         w3.displayObject("categoryContainer", categories);
       });
     });
     w3.displayObject("categoryContainer", categories);
   });
-  $(document).on("click",".deleteCategoryButton", function(){
+  $(document).on("click", ".deleteCategoryButton", function () {
     $("#deleteModal .modal-footer a").val($(this).data("id"));
   })
 
-  $(document).on("click",".editCategoryButton", function(){
-    $("#editModal #editCategoryName").val($(this).data("name"));    
-    $("#editModal .modal-footer a").val($(this).data("id"));    
+  $(document).on("click", ".editCategoryButton", function () {
+    $("#editModal #editCategoryName").val($(this).data("name"));
+    $("#editModal .modal-footer a").val($(this).data("id"));
   })
 }
 
@@ -318,4 +424,3 @@ function initCategory(){
 
 
 
-    

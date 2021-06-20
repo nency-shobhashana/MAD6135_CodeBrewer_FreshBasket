@@ -22,7 +22,7 @@
     <title>Fresh Basket - Products</title>
   </head>
 
-  <body onload="fetchCartData()">
+  <body onload="searchItem()">
     <header>
     	<div class="top-header">
     		<div class="container">
@@ -37,8 +37,8 @@
 				    <div class="col col-sm-8 search-col">
 				      <div class="search">
 				      	<div class="input-group">
-								  <input type="text" class="form-control" placeholder="Search by category or product" aria-label="Search by category or product" aria-describedby="button-addon2">
-								  <button class="btn btn-outline-secondary" type="button" id="button-addon2">search</button>
+								  <input type="text" class="form-control" placeholder="Search by category or product" aria-label="Search by category or product" aria-describedby="button-addon2" id="searchText">
+								  <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="searchData()">search</button>
 								</div>
 				      </div>
 				    </div>
@@ -79,37 +79,12 @@
     		<div class="container">
     			<div class="row">
     				<div class="col">
-						<h3 class="text-green mt-30">Cart</h3>
-    					<h3 class="text-green mt-30" id="cat-name"></h3>
+    					<h3 class="text-green mt-30 uppercase" id="cat-name"></h3>
     				</div>
     			</div>
 
-				<div class="row">
-					<div class="col-sm-8" id="accordion">
+				<div class="row" id="accordion">
 
-					</div>
-					<div class="col-md-4" id="checkout">
-						
-					
-						<h4 id="ItemTotalNumber" style="text-align: center;">4</h4>
-						<p style="text-align: center;">Number of Items in the Cart</p>
-						<hr>
-						<div id="checkoutList"></div>
-							
-						<hr>
-						<p>Total <span class="price" style="color:black">$<b id="totalPrice"></b></span>
-      					
-      					
-      					
-						<p>Delivery Charge <span class="price" style="color:black"><b>$10.25</b></span>
-						<hr>
-						<div class="checkout-logo" style="text-align: center;">
-							<img src="images/checkout.png" width="150">
-						</div><br>
-						<div>
-							<button type="button" class="checkout-btn button" onclick="dataToOrder()">Proceed to Checkout</button>
-						</div>
-					</div>
 				</div>
 	    		
 	    	</div>

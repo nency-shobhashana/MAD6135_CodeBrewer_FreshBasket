@@ -9,9 +9,20 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/main.css">
 
+
+	<!-- The core Firebase JS SDK is always required and must be listed first -->
+	<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
+	<!-- TODO: Add SDKs for Firebase products that you want to use
+	     https://firebase.google.com/docs/web/setup#available-libraries -->
+	<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-analytics.js"></script>
+	<script type="text/javascript" src="js/firebaseinit.js"></script>
+	<script src = "js/main.js"></script>
+
     <title>Fresh Basket - Product Detail</title>
   </head>
-  <body>
+  <body onload="fetchProductDetail()">
     <header>
     	<div class="top-header">
     		<div class="container">
@@ -68,15 +79,14 @@
     		<div class="container">
     			<div class="row">
     				<div class="col col-sm-4">
-    					<div class="prod-img border p-20">
-    						<img src="images/bread1.png" width="100%">
+    					<div class="prod-img border p-20" id="itemImage">
+    						
     					</div>
     				</div>
     				<div class="col col-sm-8">
     					<div class="prod-detail">
-    						<h2>Sandwich Bread</h2>
-    						<h5>Dairy Products</h5>
-    						<h3>$ 2.99</h3>
+    						<h2 id="productName">Sandwich Bread</h2>
+    						<h3 id="productPrice">$ 2.99</h3>
     						<div class="row">
 	    						<form class="col-sm-4">
 	    							<div class="form-group">
@@ -89,19 +99,24 @@
 	    						</form>
 	    					</div>
 	    					<h5>Product Information</h5>
-	    					<div class="prod-decription">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	    					<div class="prod-decription" id="itemDescription">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 	    					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
 	    					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
 	    					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
 	    					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-	    					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+	    					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div><br>
 	    					<h5>Ingredients</h5>
-	    					<div class="prod-ingredients">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	    					<div class="prod-ingredients" id="itemIngredients">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 	    					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
 	    					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
 	    					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
 	    					cillum dolore eu fugiat nulla pariatur.</div>
-    					</div>
+    					</div><br>
+
+						<div class="product-add button">
+							<button type="button" class="btn btn-primary btn-orange" id="addTocart" onclick="addToCart()" style="width: 50%;">ADD</button>
+						</div>
+
     				</div>
     			</div>
     		</div>
