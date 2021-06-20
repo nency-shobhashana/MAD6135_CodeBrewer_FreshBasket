@@ -29,7 +29,12 @@ function authenticateUser() {
 
 /* fetch data from product table */
 
-function fetchProductData() {
+var idx = 0;
+
+function fetchProductData() 
+{
+
+  idx = 0;
   const db = firebase.firestore();
 
   const category = getQueryParams('cat');
@@ -51,11 +56,13 @@ function getQueryParams(param) {
   return params[param] || "";
 }
 
-function displayCard(doc) {
+
+function displayCard(doc) 
+{
 
   var result = doc.data();
-  console.log(result);
-  var idx = 1;
+  var price = result.price[Object.keys(result.price)[0]]
+  idx += 1;
   const container = document.getElementById('accordion');
 
   const card = document.createElement('div');
@@ -66,14 +73,14 @@ function displayCard(doc) {
       <div id="collapse-${idx}" class="collapse show" data-parent="#accordion">
             <div class="card-body" id="currentItem">
 
-                  <a href="productDetail.html?itemName=${result.name}&itemPrice=${result.price}&itemDescription=${result.details}&itemIngredients=${result.ingredients}&itemImage=${result.image}">
+                  <a href="productDetail.html?itemName=${result.name}&itemPrice=${price}&itemDescription=${result.details}&itemIngredients=${result.ingredients}&itemImage=${result.image}">
                   <div class="product-image"><img src="${result.image}"></div><br>
                   </a>
 
                   <h5 id="productName">${result.name}</h5>
-                  <p id="productPrice">$${result.price}</p>
+                  <p id="productPrice">$${price}</p>
                   <div class="product-add button">
-                <button type="button" class="btn btn-primary btn-orange" id="addTocart" onclick="addToCart()">ADD</button>
+                  <button type="button" class="btn btn-primary btn-orange" id="addTocart-${idx}" onclick="addToCart(this.id)">ADD</button>
                </div>
             </div>
        </div>
@@ -111,7 +118,7 @@ function fetchProductDetail()
 
 /* Add to cart functionaility */
 
-function addToCart() {
+function addToCart(clickedId) {
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
 
@@ -162,7 +169,6 @@ function fetchCartData() {
       {
         count++;
         displayCart(doc);
-        displayCheckout(doc);
       }
       
     })
@@ -172,12 +178,13 @@ function fetchCartData() {
 }
 
 /* Display data in cart table */
+var totalPrice = 0;
 
-function displayCart(doc) {
+function displayCart(doc) 
+{
 
-  console.log("cart");
   var result = doc.data();
-  console.log(result);
+  console.log(result)
   var idx = 1;
   const container = document.getElementById('accordion');
 
@@ -217,30 +224,19 @@ function displayCart(doc) {
   `;
 
   container.innerHTML += content;
-}
 
-var totalPrice = 0;
-
-
-function displayCheckout(doc) 
-{
-
-  console.log("checkout");
-  var result = doc.data();
-  var idx = 1;
 
   const totalNumbers = document.getElementById('ItemTotalNumber');
   totalNumbers.innerHTML = count;
 
   const checkOutProduct = document.getElementById('checkoutList');
   //const content = `<p><a href="#">${result.productname}</a> <span class="price">${result.productprice}</span></p>`;
-  const content = `<p><a href="#">${result.productname}</a> <span class="price">${result.productprice}</span></p>`;
-  checkOutProduct.innerHTML += content;
+  const checkOutcontent = `<p><a href="#">${result.productname}</a> <span class="price">${result.productprice}</span></p>`;
+  checkOutProduct.innerHTML += checkOutcontent;
 
   const checkOutTotal = document.getElementById('totalPrice');
   totalPrice += parseFloat((result.productprice).match(/(\d+)/)[0]);
   checkOutTotal.innerHTML = totalPrice;
-
 }
 
 function increase() {
@@ -337,7 +333,7 @@ function singleItemDelete() {
             deleData.get().then(function (querySnapshot) {
               querySnapshot.forEach(function (doc) {
                 doc.ref.delete().then(() => {
-                   
+                   location.reload();
                 })
               });
             });
