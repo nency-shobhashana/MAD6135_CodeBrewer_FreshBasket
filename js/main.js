@@ -195,7 +195,8 @@ function addToCart(productId) {
 
 
 
-function fetchCartData() {
+function fetchCartData() 
+{
   const db = firebase.firestore();
   var userId;
   firebase.auth().onAuthStateChanged(function (user) {
@@ -349,31 +350,73 @@ function updateQty(productId, qty){
 
 /* Proceed to order and checkout */
 
-function dataToOrder() {
-  const db = firebase.firestore();
-  var userid;
+function dataToOrder() 
+{
 
+  const db = firebase.firestore();
+  var userId;
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
-      userid = firebase.auth().currentUser.uid;
-      console.log(userid);
+      userId = firebase.auth().currentUser.uid;
+      console.log(userId);
+      let itemIdList;
+      db.collection("cart").doc(userId).get().then(function(doc){
+        items = doc.data().items;
+        itemIdList = Object.keys(items);
+        count = itemIdList.length;
+        console.log(itemIdList);
+        if(itemIdList.length > 0){
+          db.collection("products").get().then((snapshot) => {
+            snapshot.docs.forEach(doc => {
+              if( itemIdList.indexOf(doc.id) !== -1)
+              {
+              
+                console.log(items[doc.id]);
+                var obj = {
+                          image: doc.data().image,
+                          productname: doc.data().name,
+                          productprice: doc.data().price,
+                          quantity: items[doc.id]
+                        }
+                orders.push(obj);
+                console.log(orders);
+                //displayCart(doc, items[doc.id])
+              }
+            });
+           addToOrder(orders, userId);
+          })
+        }
+        else{
+          // empty cart
+        }
+      });
     }
   });
+  
 
-  db.collection("cart").get().then((snapshot) => {
-    snapshot.docs.forEach(doc => {
+  // const db = firebase.firestore();
+  // var userid;
 
-      if (doc.data().userId == userid) {
-        var obj = {
-          productname: doc.data().productname,
-          productprice: doc.data().productprice
-        }
-        orders.push(obj);
-      }
-    })
-    addToOrder(orders, userid);
-    console.log(orders);
-  })
+  // firebase.auth().onAuthStateChanged(function (user) {
+  //   if (user) {
+  //     userid = firebase.auth().currentUser.uid;
+  //     console.log(userid);
+  //   }
+  // });
+  // db.collection("cart").get().then((snapshot) => {
+  //   snapshot.docs.forEach(doc => {
+  //     console.log(doc);
+  //     if (doc.data().userId == userid) {
+  //       var obj = {
+  //         productname: doc.data().productname,
+  //         productprice: doc.data().productprice
+  //       }
+  //       orders.push(obj);
+  //     }
+  //   })
+  //   addToOrder(orders, userid);
+  //   console.log(orders);
+  // })
 }
 
 //dataToOrder().then(addToOrder(orders));
@@ -384,7 +427,8 @@ function addToOrder(orders, userid) {
     orderId: Date.now(),
     userId: userid,
     status: "Ordered",
-    products: orders
+    products: orders,
+    totalPrice: totalPrice
   }
   firebase.firestore().collection("order").doc().set(docData)
     .then(() => {
@@ -402,16 +446,16 @@ function addToOrder(orders, userid) {
 
 
 
-function deleteCart(userid) {
+// function deleteCart(userid) {
 
-  var deleData = firebase.firestore().collection('cart').where('userId', '==', userid);
-  deleData.get().then(function (querySnapshot) {
-    querySnapshot.forEach(function (doc) {
-      doc.ref.delete();
-    });
-  });
-  console.log(deleData);
-}
+//   var deleData = firebase.firestore().collection('cart').where('userId', '==', userid);
+//   deleData.get().then(function (querySnapshot) {
+//     querySnapshot.forEach(function (doc) {
+//       doc.ref.delete();
+//     });
+//   });
+//   console.log(deleData);
+// }
 
 
 function singleItemDelete(productId) {
