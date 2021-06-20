@@ -127,6 +127,9 @@ function addToCart() {
 
       }).then(() => {
         console.log("Document successfully written!");
+        var x = document.getElementById("snackbar");
+        x.className = "show";
+        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
       }).catch((error) => {
         var errorCode = error.code;
         var errorMessage = error.message;
