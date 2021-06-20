@@ -148,6 +148,9 @@ a.text-green:hover {
 .mt-30 {
 	margin-top: 30px;
 }
+.mt-0 {
+	margin-top: 0;
+}
 .p-20 {
 	padding: 20px;
 }
@@ -256,4 +259,27 @@ a.text-green:hover {
 	color: #FFF;
 	box-shadow: none !important;
 	border-color: #75c34d !important;
+}
+.tabs-custom .tab-left {
+	float: left;
+	width: 30%;
+}
+.tabs-custom .tab-right {
+	margin-left: 25px;
+	margin-top: 0;
+	width: calc(70% - 25px);
+}
+.tabs-custom .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+	background-color: #F07D4A;
+	color: #FFF;
+}
+.tabs-custom .nav-pills .nav-link {
+	border: none;
+	padding: 16px;
+	margin-bottom: 4px;
+	background-color: #fff;
+	color: #000;
+}
+.order-box .card-body {
+	padding: 8px 12px;
 }
