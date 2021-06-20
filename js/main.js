@@ -381,6 +381,7 @@ function dataToOrder() {
 function addToOrder(orders, userid) {
 
   var docData = {
+    orderId: Date.now(),
     userId: userid,
     status: "Ordered",
     products: orders

@@ -19,12 +19,11 @@
 	<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-analytics.js"></script>
 	<script src="js/firebaseinit.js"></script>
 	<script src = "js/profile.js"></script>
+  <script src = "js/user.js"></script>
 
-
-
-    <title>Fresh Basket - My Account</title>
+  <title>Fresh Basket - My Account</title>
   </head>
-  <body>
+  <body onload="authenticateUser();">
     <header>
     	<div class="top-header">
     		<div class="container">
@@ -91,60 +90,65 @@
             <div class="tab-content  tab-right login-section" id="v-pills-tabContent">
               <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
                 <div class="order-box">
-                  <div class="card-body row">
-                      <div class="col-sm-3">
-                        <div class="product-image">
-                          <img src="images/card_image 2.png" width="100%">
-                        </div>
-                      </div>
-                      <div class="col-sm-5">
-                        <h5 id="productName">Clorex</h5>
-                        <p id="productPrice">$22.22</p>
-                        <div class="button"> 
-                          <button type="button" class="btn btn-primary btn-orange mt-0" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Track Package</button>
-                        </div>
-                      </div>
-                      <div class="col-sm-4">
-                        <div class="collapse" id="collapseExample">
-                          <div class="card card-body">
-                            <h6 class="text-secondary">Confirmed</h6>
-                            <h6 class="text-secondary">Cancel</h6>
-                            <h6 class="text-secondary">Shipped</h6>
-                            <h6 class="text-info">Delivered</h6>
-                          </div>
-                        </div>
-                      </div>
-                  </div>
-                  <hr>
-                  <div class="card-body row">
-                      <div class="col-sm-3">
-                        <div class="product-image">
-                          <img src="images/card_image 2.png" width="100%">
-                        </div>
-                      </div>
-                      <div class="col-sm-5">
-                        <h5 id="productName">Chocolate</h5>
-                        <p id="productPrice">$22.22</p>
-                        <div class="button"> 
-                          <button type="button" class="btn btn-primary btn-orange mt-0" data-toggle="collapse" href="#collapseExample1" aria-expanded="false" aria-controls="collapseExample1">Track Package</button>
-                        </div>
-                      </div>
-                      <div class="col-sm-4">
-                        <div class="collapse" id="collapseExample1">
-                          <div class="card card-body">
-                            <h6 class="text-secondary">Confirmed</h6>
-                            <h6 class="text-danger">Cancel</h6>
-                            <h6 class="text-secondary">Shipped</h6>
-                            <h6 class="text-secondary">Delivered</h6>
-                          </div>
-                        </div>
-                      </div>
-                  </div>
+                  
                 </div>
               </div>
               <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">Address</div>
               <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                set profile page 
+                <!-- profile -->
+                <div class="col col-sm-12">
+                    <div class="profile-section login-section">
+                      <div class="row">
+                        <div class="col col-sm-10"></div>
+                        <div class="col col-sm-2" onclick="openForm()">
+                            <img src="images/edit.png" width="25">
+                        </div>
+                      </div>
+                      <form class="needs-validation" novalidate>
+                        <div class="form-group">
+                          <label for="validationCustom01">First name</label>
+                          <input type="text" class="form-control" id="validationCustom01" required>
+                          <div class="valid-feedback">
+                            Looks good!
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="validationCustom02">Last name</label>
+                          <input type="text" class="form-control" id="validationCustom02" required>
+                          <div class="valid-feedback">
+                            Looks good!
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="exampleInputEmail1">Email address</label>
+                          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        </div>
+
+                        <div class="form-group">
+                          <label for="validationCustom03">Contact</label>
+                          <input type="text" class="form-control" id="validationCustom03" required>
+                          <div class="valid-feedback">
+                            Looks good!
+                          </div>
+                        </div>
+                      
+                        <div class="form-group">
+                          <label for="validationCustom02">Address</label>
+                          <input type="text" class="form-control" id="validationCustom04" required>
+                          <div class="valid-feedback">
+                            Looks good!
+                          </div>
+                        </div>
+
+
+                        <div class="updateBtn button" id="myForm">
+                          <button type="button" onclick="updateUser()" class="btn btn-primary btn-orange">Update</button>
+                       </div>
+                      </form><br>
+                    </div>
+                </div> 
               </div>
             </div>
 
