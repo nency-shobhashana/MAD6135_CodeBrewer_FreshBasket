@@ -27,7 +27,7 @@ rel="stylesheet">
 
 <!-- <body id="page-top" onload="initProduct()"> -->
 
-<body>
+<body onload="getOrderOfUser()">
 <!-- Page Wrapper -->
 <div id="wrapper">
 
@@ -160,10 +160,10 @@ rel="stylesheet">
             <h6 class="m-0 font-weight-bold text-primary">Firstname LastName</h6>
         </div>
         <div class="card-body">
-            <h6 class="m-0 font-weight-bold">Name: FirstName LastName</h6>
-            <h6 class="m-0 font-weight-bold">Email Id: email-id</h6>
-            <h6 class="m-0 font-weight-bold">Contact Number: N/A</h6>
-            <h6 class="m-0 font-weight-bold">Address:N/A</h6>
+            <h6 class="m-0 font-weight-bold" id="userName">Name: FirstName LastName</h6>
+            <h6 class="m-0 font-weight-bold" id="userEmail">Email Id: email-id</h6>
+            <h6 class="m-0 font-weight-bold" id="userContact">Contact Number: N/A</h6>
+            <h6 class="m-0 font-weight-bold" id="userAddress">Address: N/A</h6>
         </div>
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">All orders</h6>
@@ -178,8 +178,6 @@ rel="stylesheet">
                     <th>Order Number</th>
                     <th>Total Products</th>
                     <th>Total Amount</th>
-                    <th>User Name</th>
-                    <th>User email Id</th>
                 </tr>
               </thead>
               <tfoot>
@@ -189,45 +187,9 @@ rel="stylesheet">
                     <th>Order Number</th>
                     <th>Total Products</th>
                     <th>Total Amount</th>
-                    <th>User Name</th>
-                    <th>User email Id</th>
                 </tr>
               </tfoot>
-              <tbody>
-                  <tr w3-repeat="">
-                    <td>
-                      <button class="btn btn-success" type="button">Confirm</button>
-                      <button class="btn btn-danger" type="button">Cancel</button>
-                    </td>
-                    <td>Pending</td>
-                    <td>02214458</td>
-                    <td>5</td>
-                    <td>$ 22.25</td>
-                    <td>Nency</td>
-                    <td>shobhashananency@gmail.com</td>
-                  </tr>
-                  <tr w3-repeat="">
-                    <td>
-                      <button class="btn btn-warning" type="button">Ship</button>
-                    </td>
-                    <td>Ready to ship</td>
-                    <td>02214458</td>
-                    <td>5</td>
-                    <td>$ 22.25</td>
-                    <td>Nency</td>
-                    <td>shobhashananency@gmail.com</td>
-                  </tr>
-                  <tr w3-repeat="">
-                    <td>
-                      <button class="btn btn-info" type="button">Deliver</button>
-                    </td>
-                    <td>Ready to deliver</td>
-                    <td>5</td>
-                    <td>$ 22.25</td>
-                    <td>Nency</td>
-                    <td>shobhashananency@gmail.com</td>
-                  </tr>
-              </tbody>
+              <tbody id="order-body"></tbody>
             </table>
           </div>
         </div>
@@ -303,7 +265,7 @@ aria-hidden="true">
 <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-storage.js"></script>
 <script src="https://www.w3schools.com/lib/w3.js"></script>
 <script type="text/javascript" src="js/firebase-admin.js"></script>
-
+<script type="text/javascript" src="js/user.js"></script>
 </body>
 
 </html>

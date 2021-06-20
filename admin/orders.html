@@ -27,7 +27,7 @@ rel="stylesheet">
 
 <!-- <body id="page-top" onload="initProduct()"> -->
 
-<body>
+<body onload="initOrderBody()">
 <!-- Page Wrapper -->
 <div id="wrapper">
 
@@ -182,20 +182,7 @@ rel="stylesheet">
                     <th>User email Id</th>
                 </tr>
               </tfoot>
-              <tbody>
-                  <tr w3-repeat="">
-                    <td>
-                      <button class="btn btn-success" type="button">Confirm</button>
-                      <button class="btn btn-warning" type="button">Ship</button>
-                      <button class="btn btn-info" type="button">Deliver</button>
-                      <button class="btn btn-danger" type="button">Cancel</button>
-                    </td>
-                    <td>02214458</td>
-                    <td>5</td>
-                    <td>$ 22.25</td>
-                    <td>Nency</td>
-                    <td>shobhashananency@gmail.com</td>
-                  </tr>
+              <tbody id="order-body">
               </tbody>
             </table>
           </div>
@@ -272,7 +259,7 @@ aria-hidden="true">
 <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-storage.js"></script>
 <script src="https://www.w3schools.com/lib/w3.js"></script>
 <script type="text/javascript" src="js/firebase-admin.js"></script>
-
+<script type="text/javascript" src="js/order.js"></script>
 </body>
 
 </html>

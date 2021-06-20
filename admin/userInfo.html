@@ -27,7 +27,7 @@ rel="stylesheet">
 
 <!-- <body id="page-top" onload="initProduct()"> -->
 
-<body>
+<body onload="initUserBody()">
 <!-- Page Wrapper -->
 <div id="wrapper">
 
@@ -177,10 +177,10 @@ rel="stylesheet">
                 </tr>
               </tfoot>
               <tbody>
-                  <tr w3-repeat="">
-                    <td><a href="userDetails.html">See Details</a></td>
-                    <td>shobhashananency@gmail.com</td>
-                    <td>Nency</td>
+                  <tr w3-repeat="users">
+                    <td><a href="userDetails.html?user={{id}}">See Details</a></td>
+                    <td>{{email}}</td>
+                    <td>{{firstname}}</td>
                   </tr>
               </tbody>
             </table>
@@ -258,6 +258,7 @@ aria-hidden="true">
 <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-storage.js"></script>
 <script src="https://www.w3schools.com/lib/w3.js"></script>
 <script type="text/javascript" src="js/firebase-admin.js"></script>
+<script type="text/javascript" src="js/user.js"></script>
 
 </body>
 

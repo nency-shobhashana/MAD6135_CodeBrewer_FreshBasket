@@ -1,5 +1,5 @@
 
-function autenticateUser()
+function loadProfile()
 {
   firebase.auth().onAuthStateChanged(function(user) {
   if (user) 

@@ -282,6 +282,18 @@ function getCategoryCount(){
 	});
 }
 
+function getConfirmedCount(){
+	db.collection("order").where("status", "in", ["Confirmed", "Shipped", "Delivered"]).get().then(snap => {
+	document.getElementById('totalConfirmedCount').innerHTML = snap.size;
+	});
+}
+
+function getPendingCount(){
+	db.collection("order").where("status", "==", "Ordered").get().then(snap => {
+	document.getElementById('totalPendingCount').innerHTML = snap.size;
+	});
+}
+
 function logOut(){
   firebase.auth().signOut().then(() => {
     window.location = 'login.html';

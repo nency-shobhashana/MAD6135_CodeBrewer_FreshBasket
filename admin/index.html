@@ -23,7 +23,7 @@
 
 </head>
 
-<body id="page-top" onload="{getProductCount(); getCategoryCount();}">
+<body id="page-top" onload="{getProductCount(); getCategoryCount(); getConfirmedCount(); getPendingCount();}">
 
 <!-- Page Wrapper -->
 <div id="wrapper">
@@ -235,7 +235,7 @@
                               <div class="row no-gutters align-items-center">
                                   <div class="col mr-2">
                                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Confirmed Orders</div>
-                                      <div class="h5 mb-0 font-weight-bold text-gray-800">450</div>
+                                      <div id="totalConfirmedCount" class="h5 mb-0 font-weight-bold text-gray-800">0</div>
                                   </div>
                               </div>
                           </div>
@@ -247,7 +247,7 @@
                               <div class="row no-gutters align-items-center">
                                   <div class="col mr-2">
                                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Pending Orders</div>
-                                      <div class="h5 mb-0 font-weight-bold text-gray-800">15</div>
+                                      <div id="totalPendingCount" class="h5 mb-0 font-weight-bold text-gray-800">0</div>
                                   </div>
                               </div>
                           </div>
