@@ -77,7 +77,7 @@ function getOrderOfUser(){
 			const orderData = doc.data()
 
 			var orderNextStatus = ""
-			var buttonClass = ""
+			var buttonClass = "d-none"
 			var cancelDisable = ""
 
 			if(orderData.status == "Ordered"){

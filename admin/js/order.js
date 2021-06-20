@@ -21,7 +21,7 @@ function getOrderList(){
 			const orderData = doc.data()
 
 			var orderNextStatus = ""
-			var buttonClass = ""
+			var buttonClass = "d-none"
 			var cancelDisable = ""
 
 			if(orderData.status == "Ordered"){
@@ -97,6 +97,7 @@ function displayOrderData(){
 	        <button class="btn ${order.buttonClass}" type="button" data-orderid="${order.id}">${order.orderNextStatus}</button>
 	        <button class="btn btn-danger" type="button" data-orderid="${order.id}" ${order.cancelDisable}>Cancel</button>
 	      </td>
+	      <td>${order.status}</td>
 	      <td>${order.orderId}</td>
 	      <td>${order.productSize}</td>
 	      <td>$ ${order.orderPrice}</td>

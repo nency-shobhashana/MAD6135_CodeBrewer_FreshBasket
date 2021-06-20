@@ -114,12 +114,23 @@ function loadCategories(){
 	});
 }
 
-$('#addModal').on('show.bs.modal', function () {
-	// document.getElementById('categoryName').value = ""
-	// document.getElementById('categoryImage').value = ""
+$('.cate#addModal').on('show.bs.modal', function () {
+	document.getElementById('categoryName').value = ""
+	document.getElementById('categoryImage').value = ""
+})
+$('.cate#editModal').on('show.bs.modal', function () {
+})
+
+$('.prod#addModal').on('show.bs.modal', function () {
+	document.getElementById('productName').value = ""
+	document.getElementById('productImage').value = ""
+	document.getElementById('productWeight').value = ""
+	document.getElementById('productPrice').value = ""
+	document.getElementById('productDetail').value = ""
+	document.getElementById('productIngredients').value = ""
   loadCategories()
 })
-$('#editModal').on('show.bs.modal', function () {
+$('.prod#editModal').on('show.bs.modal', function () {
   loadCategories()
 })
 
