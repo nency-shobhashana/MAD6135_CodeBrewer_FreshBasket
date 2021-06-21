@@ -17,10 +17,22 @@ function authenticateUser() {
       document.getElementById("myProfile").onclick = function () {
         location.href = "profile.html";
       };
+      document.getElementById("myCart").onclick = function () {
+        location.href = "cart.html";
+      };
+      document.getElementById("myAccount").onclick = function () {
+        location.href = "user-detail";
+      };
     }
     else {
       console.log("you have to sign in");
       document.getElementById("myProfile").onclick = function () {
+        location.href = "login.html";
+      };
+      document.getElementById("myCart").onclick = function () {
+        location.href = "login.html";
+      };
+      document.getElementById("myAccount").onclick = function () {
         location.href = "login.html";
       };
     }
