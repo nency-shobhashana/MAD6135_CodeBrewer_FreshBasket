@@ -485,13 +485,13 @@ function searchItem()
             {
               displayCard(doc);
             }
-            else
-            {
+            // else
+            // {
 
-              let content = `<p>This search item is not available</p>`;
-              document.getElementById('accordion').innerHTML = content;
+            //   let content = `<p>This search item is not available</p>`;
+            //   document.getElementById('accordion').innerHTML = content;
 
-            }
+            // }
         });
     })
     .catch((error) => {
