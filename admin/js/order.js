@@ -35,7 +35,7 @@ function getOrderList(){
 			} else if(orderData.status == "Shipped"){
 				orderNextStatus = "Deliver"
 				buttonClass = "btn-info"
-			} else if(orderData.status == "Delivered"){
+			} else if(orderData.status == "Delivered" || orderData.status == "Canceled"){
 				cancelDisable = "disabled"
 			}
 			promises.push(db.collection("user").doc(orderData.userId).get().then((userSnap) => {
