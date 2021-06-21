@@ -4,6 +4,7 @@
 function initPage() {
   initCategory()
   authenticateUser()
+  topSellerDisplay()
 }
 
 var count = 0;
@@ -508,6 +509,56 @@ function numberofItemsInCart()
       console.log(numberOfItems);
       document.getElementById('numberOfItemsInCart').innerHTML = numberOfItems
     }
+  });
+}
+
+
+function topSellerDisplay()
+{
+
+  var topsellers = [];
+  console.log("Top seller");
+  firebase.firestore().collection("order").get().then((querySnapshot) => {
+    querySnapshot.forEach((doc) => 
+    {
+        var len = Object.keys(doc.data().products).length;
+        //console.log(len);
+        for(var i=0; i<len ;i++)
+        {
+          console.log(doc.data().products[i].quantity);
+          var orderQty = doc.data().products[i].quantity;
+          if(orderQty >=2)
+          {
+            //displayTopSellerItems();
+              var pName = doc.data().products[i].productname; 
+              if(topsellers.includes(pName))
+              {
+                console.log("Item already displayed");
+              }
+              else
+              {
+                topsellers.push(pName);
+                console.log(pName);
+                displayTopSellerItems(pName)
+              }
+          }
+        }
+        
+    });
+  });
+}
+
+function displayTopSellerItems(pName)
+{
+  firebase.firestore().collection("products").get().then((querySnapshot) => {
+    querySnapshot.forEach((doc) => 
+    {
+        if(doc.data().name == pName)
+        {
+          displayCard(doc);
+        }
+        
+    });
   });
 }
 
