@@ -23,6 +23,8 @@ function authenticateUser() {
       document.getElementById("myAccount").onclick = function () {
         location.href = "user-detail";
       };
+
+      numberofItemsInCart();
     }
     else {
       console.log("you have to sign in");
@@ -110,6 +112,13 @@ function changeHeading() {
 function fetchProductDetail()
 {
 
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) 
+    {
+      numberofItemsInCart();
+    }
+   
+  });
   var itemName = getQueryParams('itemName');
   var itemPrice = getQueryParams('itemPrice'); 
   var itemDescription = getQueryParams('itemDescription');
@@ -129,7 +138,6 @@ function fetchProductDetail()
   let btn = `<button type="button" class="btn btn-primary btn-orange" id="addTocart" onclick="addToCart('${productId}')" style="width: 50%;">ADD</button>
   `
   document.getElementById("cartBtn").innerHTML = btn;
-
 }
 
 
@@ -173,31 +181,7 @@ function addToCart(productId) {
             window.alert("Error: " + errorMessage);
           });
       })
-      // var productName = document.getElementById('productName').innerHTML;
-      // var productPrice = document.getElementById('productPrice').innerHTML;
-/**
- * items:{
- *  productId: qty
- * },
- * userId:"as"
- */
-
-      // firebase.firestore().collection("cart").doc(userId).set({
-      //   userId: userId,
-      //   productname: "productName",
-      //   productprice: "productPrice"
-
-      // }).then(() => {
-      //   console.log("Document successfully written!");
-      //   var x = document.getElementById("snackbar");
-      //   x.className = "show";
-      //   setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
-      // }).catch((error) => {
-      //   var errorCode = error.code;
-      //   var errorMessage = error.message;
-      //   // ..
-      //   window.alert("Error: " + errorMessage);
-      // });
+  
     }
     else {
       alert("You have to sign in to add products");
@@ -345,9 +329,6 @@ function updateQty(productId, qty){
       }).then(() => {
           console.log("Document successfully written!");
           window.location.reload();
-          // var x = document.getElementById("snackbar");
-          // x.className = "show";
-          // setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
         }).catch((error) => {
           var errorCode = error.code;
           var errorMessage = error.message;
@@ -405,34 +386,10 @@ function dataToOrder()
       });
     }
   });
-  
-
-  // const db = firebase.firestore();
-  // var userid;
-
-  // firebase.auth().onAuthStateChanged(function (user) {
-  //   if (user) {
-  //     userid = firebase.auth().currentUser.uid;
-  //     console.log(userid);
-  //   }
-  // });
-  // db.collection("cart").get().then((snapshot) => {
-  //   snapshot.docs.forEach(doc => {
-  //     console.log(doc);
-  //     if (doc.data().userId == userid) {
-  //       var obj = {
-  //         productname: doc.data().productname,
-  //         productprice: doc.data().productprice
-  //       }
-  //       orders.push(obj);
-  //     }
-  //   })
-  //   addToOrder(orders, userid);
-  //   console.log(orders);
-  // })
+ 
 }
 
-//dataToOrder().then(addToOrder(orders));
+
 
 function addToOrder(orders, userid) {
 
@@ -457,8 +414,8 @@ function addToOrder(orders, userid) {
 }
 
 
-function deleteCart(userid) {
-
+function deleteCart(userid) 
+{
   var deleData = firebase.firestore().collection('cart').where('userId', '==', userid);
   deleData.get().then(function (querySnapshot) {
     querySnapshot.forEach(function (doc) {
@@ -467,6 +424,7 @@ function deleteCart(userid) {
     window.location = 'index.html';
   });
   console.log(deleData);
+  
 }
 
 
@@ -536,6 +494,21 @@ function productDetail()
 
   window.location = 'productDetail.html';
   
+}
+
+function numberofItemsInCart() 
+{
+  const userId = firebase.auth().currentUser.uid;
+  firebase.firestore().collection('cart').doc(userId).get().then(function(doc){
+    let items;
+    if(doc.exists)
+    {
+      items = doc.data().items;
+      var numberOfItems = Object.keys(items).length;
+      console.log(numberOfItems);
+      document.getElementById('numberOfItemsInCart').innerHTML = numberOfItems
+    }
+  });
 }
 
 

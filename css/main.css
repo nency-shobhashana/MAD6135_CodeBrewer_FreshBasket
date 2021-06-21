@@ -326,3 +326,14 @@ a.text-green:hover {
 	from {bottom: 25%; opacity: 1;}
 	to {bottom: 0; opacity: 0;}
   }
+
+  #numberOfItemsInCart
+  {
+	  position: absolute;
+	  top: -1rem;
+	  right: 0rem;
+	  padding-right: 0.5rem;
+	  padding-left: 0.5rem;
+	  background-color: #75c34d;
+	  border-radius: 3rem;
+  }
