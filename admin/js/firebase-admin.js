@@ -19,87 +19,7 @@ const storage = firebase.storage();
 const storageRef = storage.ref();
 
 var categories = {categories:[]}
-
-function initCategory(){
-	categories.categories = [];
-	db.collection("categories").get().then((snapshot) => {
-		snapshot.size
-		snapshot.forEach((doc) =>{
-			storage.ref(doc.data().image).getDownloadURL().then((url) => {
-				categories.categories.push({id: doc.id, imagePath: url, ...doc.data()});
-				w3.displayObject("dataTable", categories);
-			}).catch((error) => {
-				categories.categories.push({id: doc.id, ...doc.data()});
-				w3.displayObject("dataTable", categories);
-			});
-		});
-		w3.displayObject("dataTable", categories);
-	});
-	$(document).on("click",".deleteCategoryButton", function(){
-		$("#deleteModal .modal-footer a").val($(this).data("id"));
-	})
-
-	$(document).on("click",".editCategoryButton", function(){
-		$("#editModal #editCategoryName").val($(this).data("name"));		
-		$("#editModal .modal-footer a").val($(this).data("id"));		
-	})
-}
-
-function addCategory(){
-	const name = document.getElementById('categoryName').value
-	const photo = document.getElementById('categoryImage').files[0]
-	if(name != null && name.trim() != "" && photo != null){
-		db.collection("categories").add({name: name, count: 0, image: `images/${photo.name}`}).then(() => {
-	
-			// Upload the file and metadata
-			storageRef.child(`images/${photo.name}`).put(photo)
-			
-			document.getElementById("addclose").click();
-			initCategory();
-		})
-	} else {
-		alert("Field is empty");
-	} 
-}
-
-function deleteCategory(id) {
-	const catRef = db.collection("categories").doc(id)
-	catRef.get().then((doc) => {
-		if(categories.categories.length <= 5){
-			document.getElementById("deleteCategoryClose").click();
-			alert("can not delete, min 5 categories needed");
-		} else if(doc.data().count == 0){
-			catRef.delete().then(() => {
-				document.getElementById("deleteCategoryClose").click();
-				initCategory();
-			})
-		} else {
-			document.getElementById("deleteCategoryClose").click();
-			alert("Category is not empty");
-		}
-	})
-}
-
-function editCategory(id) {
-	const name = document.getElementById('editCategoryName').value
-	const photo = document.getElementById('editCategoryImage').files[0]
-	if(name != null && name.trim() != "" ){
-		var newObj = {name: name}
-
-		if(photo != null){
-			newObj = {...newObj, image: `images/${photo.name}`}
-			storageRef.child(`images/${photo.name}`).put(photo)
-		}
-
-		db.collection("categories").doc(id).set(newObj,{merge: true}).then(() => {
-			document.getElementById("editClose").click();
-			initCategory();
-		})
-	} else {
-		alert("Field is empty");
-	}
-}
-
+var datatable 
 
 // Products
 function loadCategories(){
@@ -113,13 +33,6 @@ function loadCategories(){
 		document.getElementById("editProductCategory").value = $("#editModal #editProductCategorylbl").data("category");
 	});
 }
-
-$('.cate#addModal').on('show.bs.modal', function () {
-	document.getElementById('categoryName').value = ""
-	document.getElementById('categoryImage').value = ""
-})
-$('.cate#editModal').on('show.bs.modal', function () {
-})
 
 $('.prod#addModal').on('show.bs.modal', function () {
 	document.getElementById('productName').value = ""
@@ -138,29 +51,40 @@ var products = {products:[]}
 function initProduct(){
 	products.products = [];
 	db.collection("products").get().then((snapshot) =>{
+		
+		var promises = []
+
 		snapshot.forEach((doc) =>{
-			doc.data().category.get().then((ref) => {
+			
+			promises.push(doc.data().category.get().then((ref) => {
 				var priceString = ""
 				
 				const [weight, price] = Object.entries(doc.data().price)[0]
 				priceString = `[${weight}: ${price}]`
 
-				storage.ref(doc.data().image).getDownloadURL().then((url) => {
+				return storage.ref(doc.data().image).getDownloadURL().then((url) => {
 					products.products.push({id: doc.id, ...doc.data(),
 						imagePath: url, 
 						priceString: priceString,
 						price: price, weight: weight,
 						category: ref.data().name, categoryId: ref.id});
-					w3.displayObject("dataTable", products);
 				}).catch((error) => {
 					products.products.push({id: doc.id, ...doc.data(), 
 						priceString: priceString,
 						price: price, weight: weight,
 						category: ref.data().name, categoryId: ref.id});
-					w3.displayObject("dataTable", products);
 				});
-			});
+			}));
 		});
+
+		Promise.allSettled(promises).finally(() => {
+			if(datatable != undefined){
+				datatable.fnDestroy()
+			} 
+			w3.displayObject("dataTable", products);
+			datatable = $("#dataTable").dataTable()
+		})
+
 	});
 	$(document).on("click",".deleteProductButton", function(){
 		$("#deleteModal .modal-footer a").val($(this).data("id"));
@@ -282,7 +206,7 @@ function deleteProduct(name) {
 
 function logOut(){
   firebase.auth().signOut().then(() => {
-    window.location = 'login.html';
+    window.location = '../index.html';
 	}).catch((error) => {
   	console.error("Error in updating data", error);
 	});

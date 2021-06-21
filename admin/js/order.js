@@ -15,7 +15,9 @@ function getOrderList(){
 	orders.orders = [];
 
 	db.collection("order").get().then((snapshot) => {
-		snapshot.size
+		
+		var promises = []
+
 		snapshot.forEach((doc) =>{
 			const id = doc.id
 			const orderData = doc.data()
@@ -36,7 +38,7 @@ function getOrderList(){
 			} else if(orderData.status == "Delivered"){
 				cancelDisable = "disabled"
 			}
-			db.collection("user").doc(orderData.userId).get().then((userSnap) => {
+			promises.push(db.collection("user").doc(orderData.userId).get().then((userSnap) => {
 				orders.orders.push({
 					...orderData,
 					id: id, 
@@ -47,7 +49,6 @@ function getOrderList(){
 					userId: userSnap.data().firstname,
 					userEmail: userSnap.data().email
 				});
-				displayOrderData();
 
 			}).catch((error) => {
 				orders.orders.push({
@@ -60,10 +61,16 @@ function getOrderList(){
 					userId: "",
 					userEmail: ""
 				});
-				displayOrderData();
-			});
+			}));
 		});
-		displayOrderData();
+
+		Promise.allSettled(promises).finally(() => {
+			if(datatable != undefined){
+				datatable.fnDestroy()
+			} 
+			displayOrderData();
+			datatable = $("#dataTable").dataTable()
+		})
 
 	});
 	$(document).off("click",".btn-success")

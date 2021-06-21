@@ -19,9 +19,11 @@ function getUserList(){
 				...doc.data(),
 				id: id, 
 			});
-			w3.displayObject("dataTable", users);
 		});
+		
 		w3.displayObject("dataTable", users);
+		datatable = $("#dataTable").dataTable()
+
 	});
 	$(document).on("click",".btn-danger", function(){
 		const id = $(this).data("orderid")
@@ -100,9 +102,9 @@ function getOrderOfUser(){
 				buttonClass:buttonClass,
 				cancelDisable: cancelDisable
 			});
-			displayOrderData();
 		});
 		displayOrderData();
+		datatable = $("#dataTable").dataTable()
 	});
 }
 
