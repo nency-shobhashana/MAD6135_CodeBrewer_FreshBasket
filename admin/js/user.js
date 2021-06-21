@@ -19,9 +19,11 @@ function getUserList(){
 				...doc.data(),
 				id: id, 
 			});
-			w3.displayObject("dataTable", users);
 		});
+		
 		w3.displayObject("dataTable", users);
+		datatable = $("#dataTable").dataTable()
+
 	});
 	$(document).on("click",".btn-danger", function(){
 		const id = $(this).data("orderid")
@@ -89,7 +91,7 @@ function getOrderOfUser(){
 			} else if(orderData.status == "Shipped"){
 				orderNextStatus = "Deliver"
 				buttonClass = "btn-info"
-			} else if(orderData.status == "Delivered"){
+			} else if(orderData.status == "Delivered" || orderData.status == "Canceled"){
 				cancelDisable = "disabled"
 			}
 			orders.orders.push({
@@ -100,9 +102,9 @@ function getOrderOfUser(){
 				buttonClass:buttonClass,
 				cancelDisable: cancelDisable
 			});
-			displayOrderData();
 		});
 		displayOrderData();
+		datatable = $("#dataTable").dataTable()
 	});
 }
 
