@@ -472,20 +472,45 @@ function searchData()
 function searchItem()
 {
   var searchText = getQueryParams('searchtext');
+  var searchTextLowercase = searchText.toLowerCase();
   document.getElementById('searchText').value = searchText;
-  console.log(searchText);
-  firebase.firestore().collection("products").where("name", "==", searchText)
-    .get()
+  console.log(searchTextLowercase);
+  firebase.firestore().collection("products").get()
     .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
+          
+            var details = doc.data().details;
+            var pName = doc.data().name.toLowerCase();
+            if(searchTextLowercase.includes(pName) || details.includes(searchTextLowercase))
+            {
+              displayCard(doc);
+            }
+            else
+            {
 
-            displayCard(doc);
-            console.log(doc.data());
+              let content = `<p>This search item is not available</p>`;
+              document.getElementById('accordion').innerHTML = content;
+
+            }
         });
     })
     .catch((error) => {
         console.log("Error getting documents: ", error);
     });
+
+
+  // firebase.firestore().collection("products").where("name", "==", searchText)
+  //   .get()
+  //   .then((querySnapshot) => {
+  //       querySnapshot.forEach((doc) => {
+
+  //           displayCard(doc);
+  //           console.log(doc.data());
+  //       });
+  //   })
+  //   .catch((error) => {
+  //       console.log("Error getting documents: ", error);
+  //   });
   
 }
 
