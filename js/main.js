@@ -16,13 +16,13 @@ function authenticateUser() {
     if (user) {
       console.log("You are a logined user");
       document.getElementById("myProfile").onclick = function () {
-        location.href = "profile.html";
+        location.href = "user-detail.html";
       };
       document.getElementById("myCart").onclick = function () {
         location.href = "cart.html";
       };
       document.getElementById("myAccount").onclick = function () {
-        location.href = "user-detail";
+        location.href = "user-detail.html";
       };
 
       numberofItemsInCart();
@@ -83,7 +83,7 @@ function displayCard(doc)
   const card = document.createElement('div');
 
   const content = `
-    <div class="col col-sm-4 mb-20">
+    <div class="col col-sm-3 mb-20">
     <div class="card">
       <div id="collapse-${doc.id}" class="collapse show" data-parent="#accordion">
             <div class="card-body" id="currentItem">
@@ -179,7 +179,7 @@ function addToCart(productId) {
             var errorCode = error.code;
             var errorMessage = error.message;
             // ..
-            window.alert("Error: " + errorMessage);
+            //window.alert("Error: " + errorMessage);
           });
       })
   
@@ -200,6 +200,7 @@ function fetchCartData()
     if (user) {
       userId = firebase.auth().currentUser.uid;
       console.log(userId);
+      numberofItemsInCart();
       let itemIdList;
       db.collection("cart").doc(userId).get().then(function(doc){
         items = doc.data().items;

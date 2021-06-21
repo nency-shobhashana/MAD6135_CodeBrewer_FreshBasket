@@ -48,13 +48,14 @@
 				    <div class="col  col-sm-2 utilities-col">
 				      <div class="user-utilities">
 				      	<div class="row">
-				      		<div class="col-sm-4 text-right"></div>
+				      		<div class="col-sm-2 text-right"></div>
 				      		<div class="col-sm-6 text-right">
 				      			<button class="btn btn-outline-secondary logout-btn-color" type="button" onclick="logout()">Logout</button>
 				      		</div>
 				      		<div class="col-sm-4 text-right" id="myCart">
-                    <a>
+                    <a href="cart.html">
                       <img src="images/cart.png" width="40">
+                      <span id="numberOfItemsInCart">0</span>
                     </a>
                   </div>
 				      	</div>
@@ -103,7 +104,7 @@
               <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                 <!-- profile -->
                 <div class="col col-sm-12">
-                    <div class="profile-section login-section">
+                    <div class="profile-section">
                       <div class="row">
                         <div class="col col-sm-10"></div>
                         <div class="col col-sm-2" onclick="openForm()">

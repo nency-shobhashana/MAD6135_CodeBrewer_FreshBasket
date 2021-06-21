@@ -41,7 +41,7 @@ main .category .category-box .category-name {
 main .best-saver {
 	display: inline-block;
 	width: 100%;
-	margin-bottom: 30px;
+	padding-bottom: 15px;
 }
 main .best-saver .product-box {
 	padding: 15px;

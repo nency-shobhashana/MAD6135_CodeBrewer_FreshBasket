@@ -13,6 +13,7 @@ function authenticateUser()
       {          
         getOrderOfUser()
         loadProfile()
+		numberofItemsInCart();
       } 
       else 
       {
@@ -106,4 +107,19 @@ function showOrder(){
 			document.getElementById(`productimage-${index}`).src=url;
 		})
 	})
+}
+
+function numberofItemsInCart() 
+{
+  const userId = firebase.auth().currentUser.uid;
+  firebase.firestore().collection('cart').doc(userId).get().then(function(doc){
+    let items;
+    if(doc.exists)
+    {
+      items = doc.data().items;
+      var numberOfItems = Object.keys(items).length;
+      console.log(numberOfItems);
+      document.getElementById('numberOfItemsInCart').innerHTML = numberOfItems
+    }
+  });
 }
