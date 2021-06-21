@@ -280,31 +280,6 @@ function deleteProduct(name) {
 	})
 }
 
-function getProductCount(){
-	db.collection("products").get().then(snap => {
-		document.getElementById('totalProductCount').innerHTML = snap.size;
-	});
-	
-}
-
-function getCategoryCount(){
-	db.collection("categories").get().then(snap => {
-	document.getElementById('totalCategoryCount').innerHTML = snap.size;
-	});
-}
-
-function getConfirmedCount(){
-	db.collection("order").where("status", "in", ["Confirmed", "Shipped", "Delivered"]).get().then(snap => {
-	document.getElementById('totalConfirmedCount').innerHTML = snap.size;
-	});
-}
-
-function getPendingCount(){
-	db.collection("order").where("status", "==", "Ordered").get().then(snap => {
-	document.getElementById('totalPendingCount').innerHTML = snap.size;
-	});
-}
-
 function logOut(){
   firebase.auth().signOut().then(() => {
     window.location = 'login.html';

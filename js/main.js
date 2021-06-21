@@ -385,10 +385,11 @@ function dataToOrder()
               
                 console.log(items[doc.id]);
                 var obj = {
+                          category: doc.data().category,
                           image: doc.data().image,
                           productname: doc.data().name,
                           productprice: doc.data().price,
-                          quantity: items[doc.id]
+                          quantity: items[doc.id],
                         }
                 orders.push(obj);
                 console.log(orders);
@@ -436,7 +437,7 @@ function dataToOrder()
 function addToOrder(orders, userid) {
 
   var docData = {
-    orderId: Date.now(),
+    orderId: Date.now().toString(),
     userId: userid,
     status: "Ordered",
     products: orders,
@@ -446,7 +447,7 @@ function addToOrder(orders, userid) {
     .then(() => {
       console.log(orders);
       console.log("Document successfully written!");
-      //deleteCart(userid);
+      deleteCart(userid);
     }).catch((error) => {
       var errorCode = error.code;
       var errorMessage = error.message;
@@ -456,18 +457,17 @@ function addToOrder(orders, userid) {
 }
 
 
+function deleteCart(userid) {
 
-
-// function deleteCart(userid) {
-
-//   var deleData = firebase.firestore().collection('cart').where('userId', '==', userid);
-//   deleData.get().then(function (querySnapshot) {
-//     querySnapshot.forEach(function (doc) {
-//       doc.ref.delete();
-//     });
-//   });
-//   console.log(deleData);
-// }
+  var deleData = firebase.firestore().collection('cart').where('userId', '==', userid);
+  deleData.get().then(function (querySnapshot) {
+    querySnapshot.forEach(function (doc) {
+      doc.ref.delete();
+    });
+    window.location = 'index.html';
+  });
+  console.log(deleData);
+}
 
 
 function singleItemDelete(productId) {

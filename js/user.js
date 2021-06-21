@@ -4,6 +4,8 @@
 var users = {users:[]}
 var orders = {orders:[]}
 
+const storage = firebase.storage();
+
 function authenticateUser()
 {
       firebase.auth().onAuthStateChanged(function(user) {
@@ -64,7 +66,11 @@ function getOrderOfUser(){
 
 function showOrder(){
 	console.log(orders.orders)
-	orders.orders.forEach((order, index) => {
+	const sortedOrders = _.orderBy(orders.orders, ["orderId"], ["desc"])
+	sortedOrders.forEach((order, index) => {
+		const quantity = order.quantity == undefined ? 1 : order.quantity
+		const price = _.values(order.productprice)[0]
+		const weight = _.keys(order.productprice)[0]
 		$(".order-box").append(
 		`<div class="card-body row">
       <h6 class="col-sm-12 text-secondary">
@@ -72,12 +78,13 @@ function showOrder(){
       </h6>
       <div class="col-sm-3">
         <div class="product-image">
-          <img src="images/card_image 2.png" width="100%">
+          <img id="productimage-${index}" width="100%">
         </div>
       </div>
       <div class="col-sm-5">
-        <h5 id="productName">${order.productname}</h5>
-        <p id="productPrice">${order.productprice}</p>
+        <h5 id="productName">${order.productname} [${weight}]</h5>
+        <h6 class="text-secondary"><b>Quantity: </b>${quantity}</h6>
+        <p id="productPrice">$ ${price * quantity}</p>
         <div class="button"> 
           <button type="button" class="btn btn-primary btn-orange mt-0" data-toggle="collapse" href="#collapseExample${index}" aria-expanded="false" aria-controls="collapseExample">Track Package</button>
         </div>
@@ -95,5 +102,8 @@ function showOrder(){
       </div>
     </div>
     <hr>`)
+		storage.ref(order.image).getDownloadURL().then((url) => {
+			document.getElementById(`productimage-${index}`).src=url;
+		})
 	})
 }

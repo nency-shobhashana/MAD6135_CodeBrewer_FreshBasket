@@ -22,7 +22,7 @@
     <title>Fresh Basket - Products</title>
   </head>
 
-  <body onload="fetchProductData()">
+  <body onload="authenticateUser(); fetchProductData()">
     <header>    
 	<div id="snackbar">Product added to cart</div>
     	<div class="top-header">
@@ -47,8 +47,8 @@
 				      <div class="user-utilities">
 				      	<div class="row">
 				      		<div class="col-sm-4 text-right"></div>
-				      		<div class="col-sm-4 text-right">
-				      			<a href="login.html">
+				      		<div class="col-sm-4 text-right" id="myProfile">
+				      			<a href="javascript:void(0);">
 				      				<img src="images/profile.png" width="35">
 				      			</a>
 				      		</div>

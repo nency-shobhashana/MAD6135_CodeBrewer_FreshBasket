@@ -100,7 +100,7 @@ function displayOrderData(){
 	      <td>${order.status}</td>
 	      <td>${order.orderId}</td>
 	      <td>${order.productSize}</td>
-	      <td>$ ${order.orderPrice}</td>
+	      <td>$ ${order.totalPrice}</td>
 	      <td>${order.userId}</td>
 	      <td>${order.userEmail}</td>
 	    </tr>`)
